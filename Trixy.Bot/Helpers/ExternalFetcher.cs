@@ -16,7 +16,7 @@ namespace Trixy.Bot.Helpers
             using HttpContent content = res.Content;
             var data = await content.ReadAsStringAsync();
 
-            return (string)JObject.Parse(data)["url"]! ?? string.Empty;
+            return (string)JObject.Parse(data)["url"]!;
         }
     }
 }
