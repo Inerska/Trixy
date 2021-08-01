@@ -8,6 +8,7 @@ using Remora.Discord.Gateway.Extensions;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Trixy.Bot.Commands;
 using Trixy.Bot.Modules;
 
 namespace Trixy.Bot
@@ -36,7 +37,7 @@ namespace Trixy.Bot
                 .AddDiscordGateway(_ => botToken)
                 .AddDiscordCommands()
                 .Configure<CommandResponderOptions>(options => options.Prefix = "!")
-                .AddCommandGroup<HelloWorldModule>()
+                .AddTrixyCommands()
                 .BuildServiceProvider();
 
             var gatewayClient = services.GetRequiredService<DiscordGatewayClient>();

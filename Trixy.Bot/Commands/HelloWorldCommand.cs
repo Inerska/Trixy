@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Trixy.Bot.Modules
 {
-    public class HelloWorldModule : CommandGroup
+    public class HelloWorldCommand : CommandGroup
     {
         private readonly IDiscordRestChannelAPI _channelAPI;
         private readonly ICommandContext _context;
 
-        public HelloWorldModule(IDiscordRestChannelAPI channelAPI, ICommandContext commandContext)
+        public HelloWorldCommand(IDiscordRestChannelAPI channelAPI, ICommandContext commandContext)
         {
             _channelAPI = channelAPI;
             _context = commandContext;
