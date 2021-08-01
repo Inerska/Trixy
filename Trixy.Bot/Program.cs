@@ -2,7 +2,6 @@
 
 using Remora.Discord.Gateway;
 using Remora.Discord.Gateway.Extensions;
-using Microsoft.Extensions.Logging;
 
 using System;
 using System.Threading;
@@ -22,7 +21,7 @@ namespace Trixy.Bot
                 cancellationSource.Cancel();
             };
 
-            string? botToken = Environment.GetEnvironmentVariable("TRIXYS_");
+            string? botToken = Environment.GetEnvironmentVariable("TRIXY_");
 
             if (botToken is null)
             {
