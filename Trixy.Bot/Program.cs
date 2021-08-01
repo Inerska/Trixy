@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Remora.Commands.Extensions;
 using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Commands.Responders;
 using Remora.Discord.Gateway;
@@ -8,8 +7,7 @@ using Remora.Discord.Gateway.Extensions;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Trixy.Bot.Commands;
-using Trixy.Bot.Modules;
+using Trixy.Bot.CommandGroups;
 
 namespace Trixy.Bot
 {

@@ -5,12 +5,12 @@ using Remora.Discord.Commands.Contexts;
 using Remora.Results;
 using System.Threading.Tasks;
 
-namespace Trixy.Bot.Modules
+namespace Trixy.Bot.CommandGroups
 {
-    public class HelloWorldCommand
+    public class HelloWorldCommandGroup
         : CommandGroup
     {
-        public HelloWorldCommand(
+        public HelloWorldCommandGroup(
             IDiscordRestChannelAPI channelApi,
             ICommandContext context)
         {
