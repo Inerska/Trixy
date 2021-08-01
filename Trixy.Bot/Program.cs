@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Remora.Commands.Extensions;
 using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Commands.Responders;
 using Remora.Discord.Gateway;
@@ -9,13 +8,12 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Trixy.Bot.Commands;
-using Trixy.Bot.Modules;
 
 namespace Trixy.Bot
 {
-    internal class Program
+    internal static class Program
     {
-        static async Task Main(string[] args)
+        private static async Task Main(string[] args)
         {
             CancellationTokenSource cancellationSource = new();
 
