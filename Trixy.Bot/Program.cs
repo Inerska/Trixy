@@ -1,11 +1,14 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-
+using Remora.Commands.Extensions;
+using Remora.Discord.Commands.Extensions;
+using Remora.Discord.Commands.Responders;
 using Remora.Discord.Gateway;
 using Remora.Discord.Gateway.Extensions;
 
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Trixy.Bot.Modules;
 
 namespace Trixy.Bot
 {
@@ -31,6 +34,9 @@ namespace Trixy.Bot
             var services = new ServiceCollection()
                 .AddLogging()
                 .AddDiscordGateway(_ => botToken)
+                .AddDiscordCommands()
+                .Configure<CommandResponderOptions>(options => options.Prefix = "!")
+                .AddCommandGroup<HelloWorldModule>()
                 .BuildServiceProvider();
 
             var gatewayClient = services.GetRequiredService<DiscordGatewayClient>();
