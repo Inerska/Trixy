@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace Trixy.Bot.Modules
 {
-    public class HelloWorldCommand : CommandGroup
+    public class HelloWorldCommand
+        : CommandGroup
     {
-        private readonly IDiscordRestChannelAPI _channelAPI;
-        private readonly ICommandContext _context;
-
-        public HelloWorldCommand(IDiscordRestChannelAPI channelAPI, ICommandContext commandContext)
+        public HelloWorldCommand(
+            IDiscordRestChannelAPI channelApi,
+            ICommandContext context)
         {
-            _channelAPI = channelAPI;
-            _context = commandContext;
+            _channelApi = channelApi;
+            _context = context;
 
             System.Console.WriteLine("Loaded");
         }
@@ -23,8 +23,11 @@ namespace Trixy.Bot.Modules
         [Command("hw")]
         public async Task<IResult> HelloWorldAsync()
         {
-            return await _channelAPI.CreateMessageAsync(_context.ChannelID, "Hello World!");
+            return await _channelApi.CreateMessageAsync(_context.ChannelID, "Hello World!");
         }
+
+        private readonly IDiscordRestChannelAPI _channelApi;
+        private readonly ICommandContext _context;
     }
 
 }
