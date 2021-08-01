@@ -8,7 +8,8 @@ namespace Trixy.Bot.Commands
     {
         public static IServiceCollection AddTrixyCommands(this IServiceCollection services)
             => services
-                .AddCommandGroup<HelloWorldCommand>()
+                .AddCommandGroup<SocialCommandGroup>()
+                .AddCommandGroup<HelloWorldCommandGroup>()
             ;
     }
 }

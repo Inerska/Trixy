@@ -16,8 +16,6 @@ namespace Trixy.Bot.Modules
         {
             _channelApi = channelApi;
             _context = context;
-
-            System.Console.WriteLine("Loaded");
         }
 
         [Command("hw")]
