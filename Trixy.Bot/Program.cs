@@ -2,6 +2,8 @@
 
 using Remora.Discord.Gateway;
 using Remora.Discord.Gateway.Extensions;
+using Microsoft.Extensions.Logging;
+
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -28,6 +30,7 @@ namespace Trixy.Bot
             }
 
             var services = new ServiceCollection()
+                .AddLogging()
                 .AddDiscordGateway(_ => botToken)
                 .BuildServiceProvider();
 
