@@ -26,7 +26,7 @@ namespace Trixy.Bot.CommandGroups
         public async Task<IResult> SlapCommandAsync(IUser to)
         {
             var gif = await ExternalFetcher.GetRandomThemeGif(SocialTheme.SLAP);
-            var embed = new Embed(Title: gif, Footer: new EmbedFooter($"{DateTimeOffset.Now:yyyy-MM-dd HH:mm:ss}"));
+            Embed embed = new();
 
             //return await _channelApi.CreateMessageAsync(_context.ChannelID, embeds: new []{embed});
             return await _channelApi.CreateMessageAsync(_context.ChannelID, $"{gif}\n**{_context.User.ID.Mention()}** slaps **{to.ID.Mention()}** !");

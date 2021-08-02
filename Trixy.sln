@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Trixy.Bot", "Trixy.Bot\Trix
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Trixy.BotWorker", "Trixy.BotWorker\Trixy.BotWorker.csproj", "{CE78E578-559D-4FD2-A5BF-85F24F239E12}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trixy.Common", "Trixy.Common\Trixy.Common.csproj", "{4C888861-AD1F-428A-8710-CCD116ADF9F3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{CE78E578-559D-4FD2-A5BF-85F24F239E12}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE78E578-559D-4FD2-A5BF-85F24F239E12}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE78E578-559D-4FD2-A5BF-85F24F239E12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C888861-AD1F-428A-8710-CCD116ADF9F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C888861-AD1F-428A-8710-CCD116ADF9F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C888861-AD1F-428A-8710-CCD116ADF9F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C888861-AD1F-428A-8710-CCD116ADF9F3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
