@@ -1,5 +1,4 @@
-﻿using System;
-using Remora.Commands.Attributes;
+﻿using Remora.Commands.Attributes;
 using Remora.Commands.Groups;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Commands.Contexts;
@@ -16,15 +15,19 @@ namespace Trixy.Bot.CommandGroups
     {
         public SocialCommandGroup(
             IDiscordRestChannelAPI channelApi,
-            ICommandContext context)
+            ICommandContext context,
+            MessageContext messageContext)
         {
             _channelApi = channelApi;
             _context = context;
+            _messageContext = messageContext;
         }
 
         [Command("slap")]
         public async Task<IResult> SlapCommandAsync(IUser target)
         {
+            await _channelApi.DeleteMessageAsync(_context.ChannelID, _messageContext.MessageID);
+
             var gif = await ExternalFetcher.GetRandomThemeGif(SocialTheme.SLAP);
             Embed embed = await TemplateEmbed.GetSocialEmbed($"**{_context.User.Username}** slaps **{target.Username}**", SocialTheme.SLAP);
 
@@ -33,5 +36,6 @@ namespace Trixy.Bot.CommandGroups
 
         private readonly IDiscordRestChannelAPI _channelApi;
         private readonly ICommandContext _context;
+        private readonly MessageContext _messageContext;
     }
 }
