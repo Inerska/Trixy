@@ -14,6 +14,10 @@
     <PackageReference Include="Remora.Discord" Version="3.0.44" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Trixy.Common\Trixy.Common.csproj" />
+  </ItemGroup>
+
   <ProjectExtensions>
     <VisualStudio><UserProperties /></VisualStudio>
   </ProjectExtensions>

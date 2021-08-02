@@ -23,13 +23,12 @@ namespace Trixy.Bot.CommandGroups
         }
 
         [Command("slap")]
-        public async Task<IResult> SlapCommandAsync(IUser to)
+        public async Task<IResult> SlapCommandAsync(IUser target)
         {
             var gif = await ExternalFetcher.GetRandomThemeGif(SocialTheme.SLAP);
-            Embed embed = new();
+            Embed embed = await TemplateEmbed.GetSocialEmbed($"**{_context.User.Username}** slaps **{target.Username}**", SocialTheme.SLAP);
 
-            //return await _channelApi.CreateMessageAsync(_context.ChannelID, embeds: new []{embed});
-            return await _channelApi.CreateMessageAsync(_context.ChannelID, $"{gif}\n**{_context.User.ID.Mention()}** slaps **{to.ID.Mention()}** !");
+            return await _channelApi.CreateMessageAsync(_context.ChannelID, embeds: new[] { embed });
         }
 
         private readonly IDiscordRestChannelAPI _channelApi;
