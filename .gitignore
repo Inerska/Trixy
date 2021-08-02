@@ -6,3 +6,7 @@ Trixy.Bot/bin
 Trixy.Bot/obj
 Trixy.Bot/Properties/launchSettings.json
 Trixy.Bot/.idea
+
+Trixy.BotWorker/bin
+Trixy.BotWorker/obj
+Trixy.BotWorker/Properties/launchSettings.json
