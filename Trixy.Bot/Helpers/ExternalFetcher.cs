@@ -13,6 +13,8 @@ namespace Trixy.Bot.Helpers
         internal static async Task<Optional<string>> GetRandomThemeGif(SocialTheme theme)
         {
             var baseUrl = Environment.GetEnvironmentVariable("ANIME_API_BASE_URL_");
+            if (baseUrl is null)
+                throw new ArgumentNullException(nameof(baseUrl));
 
             using HttpClient client = new();
             using HttpResponseMessage res = await client.GetAsync(baseUrl + theme.ToString().ToLower());

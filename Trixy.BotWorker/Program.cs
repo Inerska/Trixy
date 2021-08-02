@@ -15,7 +15,7 @@ namespace Trixy.BotWorker
 
         private static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureServices((hostContext, services) => services
+                .ConfigureServices((_, services) => services
                     .AddLogging(c => c.AddConsole())
                     .AddHostedService<Worker>()
                     .AddTrixyBot()
