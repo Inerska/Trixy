@@ -11,9 +11,9 @@ using Trixy.Bot.CommandGroups;
 
 namespace Trixy.Bot
 {
-    internal class Program
+    static internal class Program
     {
-        static async Task Main(string[] args)
+        public static async Task Main(string[] args)
         {
             CancellationTokenSource cancellationSource = new();
 
@@ -23,7 +23,7 @@ namespace Trixy.Bot
                 cancellationSource.Cancel();
             };
 
-            string? botToken = Environment.GetEnvironmentVariable("TRIXY_");
+            var botToken = Environment.GetEnvironmentVariable("TRIXY_");
 
             if (botToken is null)
             {

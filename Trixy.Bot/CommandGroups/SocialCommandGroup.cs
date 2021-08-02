@@ -22,7 +22,7 @@ namespace Trixy.Bot.CommandGroups
         [Command("slap")]
         public async Task<IResult> SlapCommandAsync()
         {
-            var gif = await ExternalFetcher.RandomThemeGifFromApi(SocialTheme.SLAP);
+            var gif = await ExternalFetcher.GetRandomThemeGif(SocialTheme.SLAP);
 
             return await _channelApi.CreateMessageAsync(_context.ChannelID, gif);
         }
