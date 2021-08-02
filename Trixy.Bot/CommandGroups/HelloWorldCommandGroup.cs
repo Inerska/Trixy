@@ -27,5 +27,4 @@ namespace Trixy.Bot.CommandGroups
         private readonly IDiscordRestChannelAPI _channelApi;
         private readonly ICommandContext _context;
     }
-
 }
