@@ -3,7 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31321.278
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Trixy.Bot", "Trixy.Bot\Trixy.Bot.csproj", "{D02C67D2-7B79-467D-B2D8-4E4FBB096615}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Trixy.BotWorker", "Trixy.BotWorker\Trixy.BotWorker.csproj", "{CE78E578-559D-4FD2-A5BF-85F24F239E12}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D02C67D2-7B79-467D-B2D8-4E4FBB096615}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D02C67D2-7B79-467D-B2D8-4E4FBB096615}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D02C67D2-7B79-467D-B2D8-4E4FBB096615}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D02C67D2-7B79-467D-B2D8-4E4FBB096615}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE78E578-559D-4FD2-A5BF-85F24F239E12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE78E578-559D-4FD2-A5BF-85F24F239E12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE78E578-559D-4FD2-A5BF-85F24F239E12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE78E578-559D-4FD2-A5BF-85F24F239E12}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection

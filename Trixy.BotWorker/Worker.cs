@@ -1,6 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -10,7 +9,7 @@ using Remora.Discord.Gateway;
 
 namespace Trixy.BotWorker
 {
-    public class Worker
+    public sealed class Worker
         : BackgroundService
     {
         public Worker(
@@ -23,13 +22,12 @@ namespace Trixy.BotWorker
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            while (!stoppingToken.IsCancellationRequested)
-            {
-                _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-                await Task.Delay(1000, stoppingToken);
+            var result = await _discordGatewayClient.RunAsync(stoppingToken);
+            if (!result.IsSuccess)
+                throw new Exception(result.Error?.Message, result.Error as Exception);
 
-                await _discordGatewayClient.RunAsync(stoppingToken);
-            }
+            _logger.LogInformation("Trixy is ready to serve");
+            _logger.LogInformation(DateTime.Now.ToString(CultureInfo.CurrentCulture));
         }
 
         private readonly ILogger<Worker> _logger;

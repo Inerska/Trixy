@@ -1,29 +1,10 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Remora.Discord.Commands.Extensions;
-using Remora.Discord.Commands.Responders;
-using Remora.Discord.Gateway;
-using Remora.Discord.Gateway.Extensions;
-
-using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Trixy.Bot.CommandGroups;
-
-namespace Trixy.Bot
+﻿namespace Trixy.Bot
 {
-    static internal class Program
+    internal static class Program
     {
-        public static async Task Main(string[] args)
+        public static void Main(string[] args)
         {
-            CancellationTokenSource cancellationSource = new();
-
-            Console.CancelKeyPress += (sender, eventArgs) =>
-            {
-                eventArgs.Cancel = true;
-                cancellationSource.Cancel();
-            };
-
-            var botToken = Environment.GetEnvironmentVariable("TRIXY_");
+            /*var botToken = Environment.GetEnvironmentVariable("TRIXY_");
 
             if (botToken is null)
             {
@@ -35,12 +16,7 @@ namespace Trixy.Bot
                 .AddDiscordGateway(_ => botToken)
                 .AddDiscordCommands()
                 .Configure<CommandResponderOptions>(options => options.Prefix = "!")
-                .AddTrixyCommands()
-                .BuildServiceProvider();
-
-            var gatewayClient = services.GetRequiredService<DiscordGatewayClient>();
-
-            var runResult = await gatewayClient.RunAsync(cancellationSource.Token);
+                .BuildServiceProvider();*/
         }
     }
 }
