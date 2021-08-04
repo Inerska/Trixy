@@ -24,6 +24,32 @@ namespace Trixy.Bot.CommandGroups
             _messageContext = messageContext;
         }
 
+        [Command("cuddle")]
+        public async Task<IResult> CuddleCommandAsync(IUser target)
+        {
+            await _channelApi.DeleteMessageAsync(_context.ChannelID, _messageContext.MessageID);
+
+            Embed embed = await TemplateEmbed.GetSocialEmbed($"**{_context.User.Username}** cuddles **{target.Username}**", SafeForWork.CUDDLE);
+
+            var result = await _channelApi.CreateMessageAsync(_context.ChannelID, embeds: new[] { embed });
+            return result.IsSuccess
+                ? Result.FromSuccess()
+                : Result.FromError(result.Error);
+        }
+
+        [Command("bully")]
+        public async Task<IResult> BullyCommandAsync(IUser target)
+        {
+            await _channelApi.DeleteMessageAsync(_context.ChannelID, _messageContext.MessageID);
+
+            Embed embed = await TemplateEmbed.GetSocialEmbed($"**{_context.User.Username}** bullies **{target.Username}**", SafeForWork.BULLY);
+
+            var result = await _channelApi.CreateMessageAsync(_context.ChannelID, embeds: new[] { embed });
+            return result.IsSuccess
+                ? Result.FromSuccess()
+                : Result.FromError(result.Error);
+        }
+
         [Command("slap")]
         public async Task<IResult> SlapCommandAsync(IUser target)
         {
@@ -31,7 +57,10 @@ namespace Trixy.Bot.CommandGroups
 
             Embed embed = await TemplateEmbed.GetSocialEmbed($"**{_context.User.Username}** slaps **{target.Username}**", SafeForWork.SLAP);
 
-            return await _channelApi.CreateMessageAsync(_context.ChannelID, embeds: new[] { embed });
+            var result = await _channelApi.CreateMessageAsync(_context.ChannelID, embeds: new[] { embed });
+            return result.IsSuccess
+                ? Result.FromSuccess()
+                : Result.FromError(result.Error);
         }
 
         private readonly IDiscordRestChannelAPI _channelApi;

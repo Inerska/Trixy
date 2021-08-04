@@ -14,7 +14,10 @@ namespace Trixy.Bot.Helpers
     {
         public static async Task<string?> GetRandomThemeGif(OneOf<SafeForWork, NotSafeForWork> category)
         {
-            var baseUrl = category.IsT0 ? Environment.GetEnvironmentVariable("SFW_ANIME_API_BASE_URL_") : Environment.GetEnvironmentVariable("NSFW_ANIME_API_BASE_URL_");
+            var baseUrl = category.IsT0
+                ? Environment.GetEnvironmentVariable("SFW_ANIME_API_BASE_URL_")
+                : Environment.GetEnvironmentVariable("NSFW_ANIME_API_BASE_URL_");
+
             if (baseUrl is null)
                 throw new ArgumentNullException(nameof(baseUrl));
 
