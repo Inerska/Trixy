@@ -25,24 +25,19 @@ namespace Trixy.Bot.CommandGroups
         }
 
         [Command("cuddle")]
-        public async Task<IResult> CuddleCommandAsync(IUser target)
-        {
-            await _channelApi.DeleteMessageAsync(_context.ChannelID, _messageContext.MessageID);
-
-            Embed embed = await TemplateEmbed.GetSocialEmbed($"**{_context.User.Username}** cuddles **{target.Username}**", SafeForWork.CUDDLE);
-
-            var result = await _channelApi.CreateMessageAsync(_context.ChannelID, embeds: new[] { embed });
-            return result.IsSuccess
-                ? Result.FromSuccess()
-                : Result.FromError(result.Error);
-        }
+        public async Task<IResult> CuddleCommandAsync(IUser target) => await SendSafeSocialEmbedAsync(SafeForWork.CUDDLE, target);
 
         [Command("bully")]
-        public async Task<IResult> BullyCommandAsync(IUser target)
+        public async Task<IResult> BullyCommandAsync(IUser target) => await SendSafeSocialEmbedAsync(SafeForWork.BULLY, target);
+
+        [Command("slap")]
+        public async Task<IResult> SlapCommandAsync(IUser target) => await SendSafeSocialEmbedAsync(SafeForWork.SLAP, target);
+
+        private async Task<IResult> SendSafeSocialEmbedAsync(SafeForWork sfwSocialTheme, IUser target)
         {
             await _channelApi.DeleteMessageAsync(_context.ChannelID, _messageContext.MessageID);
 
-            Embed embed = await TemplateEmbed.GetSocialEmbed($"**{_context.User.Username}** bullies **{target.Username}**", SafeForWork.BULLY);
+            Embed embed = await TemplateEmbed.GetSocialEmbed($"**{_context.User.Username}** {sfwSocialTheme.ToString().ToLower()}s **{target.Username}**", sfwSocialTheme);
 
             var result = await _channelApi.CreateMessageAsync(_context.ChannelID, embeds: new[] { embed });
             return result.IsSuccess
@@ -50,12 +45,11 @@ namespace Trixy.Bot.CommandGroups
                 : Result.FromError(result.Error);
         }
 
-        [Command("slap")]
-        public async Task<IResult> SlapCommandAsync(IUser target)
+        private async Task<IResult> SendNotSafeSocialEmbedAsync(NotSafeForWork nsfwSocialTheme, IUser target)
         {
             await _channelApi.DeleteMessageAsync(_context.ChannelID, _messageContext.MessageID);
 
-            Embed embed = await TemplateEmbed.GetSocialEmbed($"**{_context.User.Username}** slaps **{target.Username}**", SafeForWork.SLAP);
+            var embed = await TemplateEmbed.GetSocialEmbed($"**{_context.User.Username}** {nsfwSocialTheme.ToString().ToLower()}s **{target.Username}**", nsfwSocialTheme);
 
             var result = await _channelApi.CreateMessageAsync(_context.ChannelID, embeds: new[] { embed });
             return result.IsSuccess
