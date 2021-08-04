@@ -1,16 +1,48 @@
 namespace Trixy.Bot.Helpers
 {
-    public enum SocialTheme
+    public static class SocialTheme
     {
-        NEKO,
-        KITSUNE,
-        HUG,
-        PAT,
-        WAIFU,
-        CRY,
-        KISS,
-        SLAP,
-        SMUG,
-        PUNCH
+        public enum SafeForWork
+        {
+            WAIFU,
+            NEKO,
+            SHINOBU,
+            MEGUMIN,
+            BULLY,
+            CUDDLE,
+            CRY,
+            HUG,
+            AWOO,
+            KISS,
+            LICK,
+            PAT,
+            SMUG,
+            BONK,
+            YEET,
+            BLUSH,
+            SMILE,
+            WAVE,
+            HIGHFIVE,
+            HANDHOLD,
+            NOM,
+            BITE,
+            GLOMP,
+            SLAP,
+            KILL,
+            KICK,
+            HAPPY,
+            WINK,
+            POKE,
+            DANCE,
+            CRINGE
+        }
+
+        public enum NotSafeForWork
+        {
+            WAIFU,
+            NEKO,
+            TRAP,
+            BLOWJOB
+        }
     }
 }

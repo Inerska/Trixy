@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
 using Trixy.Bot.Helpers;
+using static Trixy.Bot.Helpers.SocialTheme;
 
 namespace Trixy.Bot.CommandGroups
 {
@@ -28,8 +29,7 @@ namespace Trixy.Bot.CommandGroups
         {
             await _channelApi.DeleteMessageAsync(_context.ChannelID, _messageContext.MessageID);
 
-            var gif = await ExternalFetcher.GetRandomThemeGif(SocialTheme.SLAP);
-            Embed embed = await TemplateEmbed.GetSocialEmbed($"**{_context.User.Username}** slaps **{target.Username}**", SocialTheme.SLAP);
+            Embed embed = await TemplateEmbed.GetSocialEmbed($"**{_context.User.Username}** slaps **{target.Username}**", SafeForWork.SLAP);
 
             return await _channelApi.CreateMessageAsync(_context.ChannelID, embeds: new[] { embed });
         }

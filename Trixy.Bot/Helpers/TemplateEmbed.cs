@@ -1,5 +1,6 @@
-﻿using Remora.Discord.API.Abstractions.Objects;
+﻿using OneOf;
 using Remora.Discord.API.Objects;
+using static Trixy.Bot.Helpers.SocialTheme;
 using System;
 using System.Threading.Tasks;
 using Trixy.Common;
@@ -8,13 +9,13 @@ namespace Trixy.Bot.Helpers
 {
     public static class TemplateEmbed
     {
-        public async static Task<Embed> GetSocialEmbed(string header, SocialTheme socialTheme)
+        public async static Task<Embed> GetSocialEmbed(string header, OneOf<SafeForWork, NotSafeForWork> category)
         {
-            var image = await ExternalFetcher.GetRandomThemeGif(socialTheme);
+            var image = await ExternalFetcher.GetRandomThemeGif(category);
             Embed embed = new(Description: header,
                               Colour: Colors.Embed.TransparentColor,
                               Image: new EmbedImage(Url: image),
-                              Footer: new EmbedFooter($"{socialTheme} · {DateTime.Now.ToShortTimeString()}"));
+                              Footer: new EmbedFooter($"{category.Value} · {DateTime.Now.ToShortTimeString()}"));
 
             return embed;
         }
