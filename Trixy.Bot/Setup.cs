@@ -13,7 +13,7 @@ namespace Trixy.Bot
         public static IServiceCollection AddTrixyBot(this IServiceCollection services)
             => services
                 .AddDiscordGateway(_ => GetSecretToken())
-                .AddDiscordCommands()
+                .AddDiscordCommands(enableSlash: true)
                 .Configure<CommandResponderOptions>(options => options.Prefix = "!")
                 .AddTrixyCommands()
                 .AddTrixyResponders()

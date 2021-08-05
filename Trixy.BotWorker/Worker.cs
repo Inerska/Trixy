@@ -30,7 +30,7 @@ namespace Trixy.BotWorker
             {
                 _logger.LogWarning
                     (
-                        "The registered commands don't support slash commands :(",
+                        "Cannot support slash commands :(",
                         slashSupported.Error.Message
                     );
 
