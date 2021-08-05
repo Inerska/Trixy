@@ -7,6 +7,7 @@ using Remora.Discord.Commands.Services;
 using Remora.Discord.Gateway;
 using Remora.Discord.Gateway.Responders;
 using Remora.Discord.Gateway.Services;
+using Remora.Discord.Rest.API;
 using Remora.Results;
 using System.Threading;
 using System.Threading.Tasks;
@@ -41,8 +42,10 @@ namespace Trixy.Bot.Responders
 
         public async Task<Result> RespondAsync(IGuildCreate gatewayEvent, CancellationToken ct = default)
         {
-            await _slashService.UpdateSlashCommandsAsync(gatewayEvent.ID);
-            return Result.FromSuccess();
+            var result = await _slashService.UpdateSlashCommandsAsync(gatewayEvent.ID);
+            return result.IsSuccess
+                ? Result.FromSuccess()
+                : Result.FromError(result.Error);
         }
 
         private readonly DiscordGatewayClient _gatewayClient;

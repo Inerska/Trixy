@@ -33,7 +33,7 @@ namespace Trixy.Bot.CommandGroups
             (
                 _interactionContext.ApplicationID,
                 _interactionContext.Token,
-                embeds: new[] {embed},
+                embeds: new[] { embed },
                 ct: CancellationToken
             );
             return result.IsSuccess
