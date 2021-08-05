@@ -8,6 +8,9 @@ Trixy.Bot/obj
 Trixy.Bot/Properties/launchSettings.json
 Trixy.Bot/.idea
 
+Trixy.Bot.Test/bin
+Trixy.Bot.Test/obj
+
 Trixy.BotWorker/bin
 Trixy.BotWorker/obj
 Trixy.BotWorker/Properties/launchSettings.json
