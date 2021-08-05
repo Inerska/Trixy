@@ -16,17 +16,13 @@ namespace Trixy.Bot.CommandGroups
         : CommandGroup
     {
         public SocialCommandGroup(
-            IDiscordRestChannelAPI channelApi,
-            MessageContext messageContext,
             IDiscordRestWebhookAPI discordRestWebhookApi,
             InteractionContext interactionContext)
         {
-            _channelApi = channelApi;
-            _messageContext = messageContext;
             _discordRestWebhookApi = discordRestWebhookApi;
             _interactionContext = interactionContext;
         }
-        
+
         #region CommandsGroups
         [Command("wave")]
         [Description("Posts an embed with a anime gif associated to wave theme.")]
@@ -164,8 +160,6 @@ namespace Trixy.Bot.CommandGroups
 
         private async Task<IResult> SendSafeSocialEmbedAsync(SafeForWork sfwSocialTheme, IUser? target = null)
         {
-            await _channelApi.DeleteMessageAsync(_interactionContext.ChannelID, _messageContext.MessageID);
-
             var header = target is null
                 ? $"{SurroundWithAsterisks(_interactionContext.User.Username)} {Stringify(sfwSocialTheme)}"
                 : $"{SurroundWithAsterisks(_interactionContext.User.Username)} {Stringify(sfwSocialTheme)} {SurroundWithAsterisks(target.Username)}";
@@ -186,9 +180,8 @@ namespace Trixy.Bot.CommandGroups
                 : Result.FromError(result.Error);
         }
 
-        private async Task<IResult> SendNotSafeSocialEmbedAsync(NotSafeForWork nsfwSocialTheme, IUser? target = null)
+        /*private async Task<IResult> SendNotSafeSocialEmbedAsync(NotSafeForWork nsfwSocialTheme, IUser? target = null)
         {
-            await _channelApi.DeleteMessageAsync(_interactionContext.ChannelID, _messageContext.MessageID);
 
             var header = target is null
                 ? $"{SurroundWithAsterisks(_interactionContext.User.Username)} {Stringify(nsfwSocialTheme)}"
@@ -200,10 +193,8 @@ namespace Trixy.Bot.CommandGroups
             return result.IsSuccess
                 ? Result.FromSuccess()
                 : Result.FromError(result.Error);
-        }
+        }*/
 
-        private readonly IDiscordRestChannelAPI _channelApi;
-        private readonly MessageContext _messageContext;
         private readonly IDiscordRestWebhookAPI _discordRestWebhookApi;
         private readonly InteractionContext _interactionContext;
     }

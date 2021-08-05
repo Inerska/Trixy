@@ -2,7 +2,9 @@
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Gateway.Commands;
+using Remora.Discord.API.Gateway.Events;
 using Remora.Discord.API.Objects;
+using Remora.Discord.Commands.Services;
 using Remora.Discord.Gateway;
 using Remora.Discord.Gateway.Responders;
 using Remora.Discord.Gateway.Services;
@@ -13,17 +15,19 @@ using System.Threading.Tasks;
 namespace Trixy.Bot.Responders
 {
     public class ReadyResponder
-        : IResponder<IReady>
+        : IResponder<GuildCreate>
     {
         public ReadyResponder(
+            SlashService slashService,
             DiscordGatewayClient gatewayClient,
             ILogger<ResponderService> logger)
         {
+            _slashService = slashService;
             _gatewayClient = gatewayClient;
             _logger = logger;
         }
 
-        public Task<Result> RespondAsync(IReady gatewayEvent, CancellationToken ct = default)
+        public async Task<Result> RespondAsync(GuildCreate gatewayEvent, CancellationToken ct = default)
         {
             var presenceCommand = new UpdatePresence(ClientStatus.Online, false, null, new IActivity[]
             {
@@ -31,12 +35,14 @@ namespace Trixy.Bot.Responders
             });
 
             _gatewayClient.SubmitCommandAsync(presenceCommand);
+            await _slashService.UpdateSlashCommandsAsync(gatewayEvent.ID);
             _logger.LogInformation("Operational !");
 
-            return Task.FromResult(Result.FromSuccess());
+            return Result.FromSuccess();
         }
 
         private readonly DiscordGatewayClient _gatewayClient;
         private readonly ILogger<ResponderService> _logger;
+        private readonly SlashService _slashService;
     }
 }
