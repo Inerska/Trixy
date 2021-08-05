@@ -1,19 +1,24 @@
-﻿using Remora.Commands.Attributes;
+﻿using System.ComponentModel;
+using System.Threading.Tasks;
+using Remora.Commands.Attributes;
 using Remora.Commands.Groups;
+using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Commands.Contexts;
 using Remora.Results;
-using System.Threading.Tasks;
-using Remora.Discord.API.Abstractions.Objects;
 using Trixy.Bot.Helpers;
 using static Trixy.Bot.Helpers.SocialTheme;
-using System.ComponentModel;
+using static Trixy.Bot.Helpers.DiscordFormatter;
 
 namespace Trixy.Bot.CommandGroups
 {
     internal class SocialCommandGroup
         : CommandGroup
     {
+        private readonly IDiscordRestChannelAPI _channelApi;
+        private readonly ICommandContext _context;
+        private readonly MessageContext _messageContext;
+
         public SocialCommandGroup(
             IDiscordRestChannelAPI channelApi,
             ICommandContext context,
@@ -24,70 +29,146 @@ namespace Trixy.Bot.CommandGroups
             _messageContext = messageContext;
         }
 
-        [Command("wave"), Description("Wave someone")]
-        public async Task<IResult> WaveCommandAsync(IUser? target) => await SendSafeSocialEmbedAsync(SafeForWork.WAVE, target);
+        [Command("wave")]
+        [Description("Wave someone")]
+        public async Task<IResult> WaveCommandAsync(IUser? target)
+        {
+            return await SendSafeSocialEmbedAsync(SafeForWork.WAVE, target);
+        }
 
-        [Command("dance"), Description("Just dance with style")]
-        public async Task<IResult> DanceCommandAsync() => await SendSafeSocialEmbedAsync(SafeForWork.DANCE, null);
+        [Command("dance")]
+        [Description("Just dance with style")]
+        public async Task<IResult> DanceCommandAsync()
+        {
+            return await SendSafeSocialEmbedAsync(SafeForWork.DANCE);
+        }
 
-        [Command("poke"), Description("Poke poke someone")]
-        public async Task<IResult> PokeCommandAsync(IUser? target) => await SendSafeSocialEmbedAsync(SafeForWork.POKE, target);
+        [Command("poke")]
+        [Description("Poke poke someone")]
+        public async Task<IResult> PokeCommandAsync(IUser? target)
+        {
+            return await SendSafeSocialEmbedAsync(SafeForWork.POKE, target);
+        }
 
-        [Command("wink"), Description("Wave someone ;)")]
-        public async Task<IResult> WinkCommandAsync(IUser? target) => await SendSafeSocialEmbedAsync(SafeForWork.WINK, target);
+        [Command("wink")]
+        [Description("Wave someone ;)")]
+        public async Task<IResult> WinkCommandAsync(IUser? target)
+        {
+            return await SendSafeSocialEmbedAsync(SafeForWork.WINK, target);
+        }
 
-        [Command("kick"), Description("Kick someone")]
-        public async Task<IResult> KickCommandAsync(IUser? target) => await SendSafeSocialEmbedAsync(SafeForWork.KICK, target);
+        [Command("kick")]
+        [Description("Kick someone")]
+        public async Task<IResult> KickCommandAsync(IUser? target)
+        {
+            return await SendSafeSocialEmbedAsync(SafeForWork.KICK, target);
+        }
 
-        [Command("kill"), Description("Kill someone")]
-        public async Task<IResult> KillCommandAsync(IUser? target) => await SendSafeSocialEmbedAsync(SafeForWork.KILL, target);
+        [Command("kill")]
+        [Description("Kill someone")]
+        public async Task<IResult> KillCommandAsync(IUser? target)
+        {
+            return await SendSafeSocialEmbedAsync(SafeForWork.KILL, target);
+        }
 
-        [Command("bite"), Description("Bite someone")]
-        public async Task<IResult> BiteCommandAsync(IUser? target) => await SendSafeSocialEmbedAsync(SafeForWork.BITE, target);
+        [Command("bite")]
+        [Description("Bite someone")]
+        public async Task<IResult> BiteCommandAsync(IUser? target)
+        {
+            return await SendSafeSocialEmbedAsync(SafeForWork.BITE, target);
+        }
 
-        [Command("nom"), Description("Chew someone")]
-        public async Task<IResult> NomCommandAsync(IUser? target) => await SendSafeSocialEmbedAsync(SafeForWork.NOM, target);
+        [Command("nom")]
+        [Description("Chew someone")]
+        public async Task<IResult> NomCommandAsync(IUser? target)
+        {
+            return await SendSafeSocialEmbedAsync(SafeForWork.NOM, target);
+        }
 
-        [Command("highfive"), Description("Highfive someone")]
-        public async Task<IResult> HighFiveCommandAsync(IUser? target) => await SendSafeSocialEmbedAsync(SafeForWork.HIGHFIVE, target);
+        [Command("highfive")]
+        [Description("Highfive someone")]
+        public async Task<IResult> HighFiveCommandAsync(IUser? target)
+        {
+            return await SendSafeSocialEmbedAsync(SafeForWork.HIGHFIVE, target);
+        }
 
-        [Command("smile"), Description("Smile :)")]
-        public async Task<IResult> SmileCommandAsync() => await SendSafeSocialEmbedAsync(SafeForWork.SMILE, null);
+        [Command("smile")]
+        [Description("Smile :)")]
+        public async Task<IResult> SmileCommandAsync()
+        {
+            return await SendSafeSocialEmbedAsync(SafeForWork.SMILE);
+        }
 
-        [Command("blush"), Description("Blush >//<")]
-        public async Task<IResult> BlushCommandAsync() => await SendSafeSocialEmbedAsync(SafeForWork.BLUSH, null);
+        [Command("blush")]
+        [Description("Blush >//<")]
+        public async Task<IResult> BlushCommandAsync()
+        {
+            return await SendSafeSocialEmbedAsync(SafeForWork.BLUSH);
+        }
 
-        [Command("smug"), Description("Smug :')")]
-        public async Task<IResult> SmugCommandAsync() => await SendSafeSocialEmbedAsync(SafeForWork.SMUG, null);
+        [Command("smug")]
+        [Description("Smug :')")]
+        public async Task<IResult> SmugCommandAsync()
+        {
+            return await SendSafeSocialEmbedAsync(SafeForWork.SMUG);
+        }
 
-        [Command("pat", "patpat"), Description("Patpat someone")]
-        public async Task<IResult> PatCommandAsync(IUser? target) => await SendSafeSocialEmbedAsync(SafeForWork.PAT, target);
+        [Command("pat", "patpat")]
+        [Description("Patpat someone")]
+        public async Task<IResult> PatCommandAsync(IUser? target)
+        {
+            return await SendSafeSocialEmbedAsync(SafeForWork.PAT, target);
+        }
 
-        [Command("lick"), Description("Lick someone")]
-        public async Task<IResult> LickCommandAsync(IUser? target) => await SendSafeSocialEmbedAsync(SafeForWork.LICK, target);
+        [Command("lick")]
+        [Description("Lick someone")]
+        public async Task<IResult> LickCommandAsync(IUser? target)
+        {
+            return await SendSafeSocialEmbedAsync(SafeForWork.LICK, target);
+        }
 
-        [Command("kiss"), Description("Kiss someone :*")]
-        public async Task<IResult> KissCommandAsync(IUser? target) => await SendSafeSocialEmbedAsync(SafeForWork.KISS, target);
+        [Command("kiss")]
+        [Description("Kiss someone :*")]
+        public async Task<IResult> KissCommandAsync(IUser? target)
+        {
+            return await SendSafeSocialEmbedAsync(SafeForWork.KISS, target);
+        }
 
-        [Command("hug"), Description("Highfive someone")]
-        public async Task<IResult> HugCommandAsync(IUser? target) => await SendSafeSocialEmbedAsync(SafeForWork.HUG, target);
+        [Command("hug")]
+        [Description("Highfive someone")]
+        public async Task<IResult> HugCommandAsync(IUser? target)
+        {
+            return await SendSafeSocialEmbedAsync(SafeForWork.HUG, target);
+        }
 
-        [Command("cuddle"), Description("Cuddle someone")]
-        public async Task<IResult> CuddleCommandAsync(IUser? target) => await SendSafeSocialEmbedAsync(SafeForWork.CUDDLE, target);
+        [Command("cuddle")]
+        [Description("Cuddle someone")]
+        public async Task<IResult> CuddleCommandAsync(IUser? target)
+        {
+            return await SendSafeSocialEmbedAsync(SafeForWork.CUDDLE, target);
+        }
 
-        [Command("bully"), Description("Bully someone :@")]
-        public async Task<IResult> BullyCommandAsync(IUser? target) => await SendSafeSocialEmbedAsync(SafeForWork.BULLY, target);
+        [Command("bully")]
+        [Description("Bully someone :@")]
+        public async Task<IResult> BullyCommandAsync(IUser? target)
+        {
+            return await SendSafeSocialEmbedAsync(SafeForWork.BULLY, target);
+        }
 
-        [Command("slap"), Description("Slap someone")]
-        public async Task<IResult> SlapCommandAsync(IUser? target) => await SendSafeSocialEmbedAsync(SafeForWork.SLAP, target);
+        [Command("slap")]
+        [Description("Slap someone")]
+        public async Task<IResult> SlapCommandAsync(IUser? target)
+        {
+            return await SendSafeSocialEmbedAsync(SafeForWork.SLAP, target);
+        }
 
         private async Task<IResult> SendSafeSocialEmbedAsync(SafeForWork sfwSocialTheme, IUser? target = null)
         {
             await _channelApi.DeleteMessageAsync(_context.ChannelID, _messageContext.MessageID);
 
             var header = target is null
-                ? $"**{_context.User.Username}** {Stringify(sfwSocialTheme)}"
-                : $"**{_context.User.Username}** {Stringify(sfwSocialTheme)} **{target?.Username}**";
+                ? $"{SurroundWithAsterisks(_context.User.Username)} {Stringify(sfwSocialTheme)}"
+                : $"{SurroundWithAsterisks(_context.User.Username)} {Stringify(sfwSocialTheme)} {SurroundWithAsterisks(target.Username)}";
 
             var embed = await TemplateEmbed.GetSocialEmbed(header, sfwSocialTheme);
 
@@ -102,8 +183,8 @@ namespace Trixy.Bot.CommandGroups
             await _channelApi.DeleteMessageAsync(_context.ChannelID, _messageContext.MessageID);
 
             var header = target is null
-                ? $"**{_context.User.Username}** {Stringify(nsfwSocialTheme)}"
-                : $"**{_context.User.Username}** {Stringify(nsfwSocialTheme)} **{target?.Username}**";
+                ? $"{SurroundWithAsterisks(_context.User.Username)} {Stringify(nsfwSocialTheme)}"
+                : $"{SurroundWithAsterisks(_context.User.Username)} {Stringify(nsfwSocialTheme)} {SurroundWithAsterisks(target.Username)}";
 
             var embed = await TemplateEmbed.GetSocialEmbed(header, nsfwSocialTheme);
 
@@ -112,9 +193,5 @@ namespace Trixy.Bot.CommandGroups
                 ? Result.FromSuccess()
                 : Result.FromError(result.Error);
         }
-
-        private readonly IDiscordRestChannelAPI _channelApi;
-        private readonly ICommandContext _context;
-        private readonly MessageContext _messageContext;
     }
 }
