@@ -35,7 +35,8 @@ namespace Trixy.Bot.Helpers
 
             return result?.Url;
         }
-
+        
+        
 
         private record RandomThemeApiResponse(string Url);
     }

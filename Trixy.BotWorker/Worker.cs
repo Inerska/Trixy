@@ -35,20 +35,6 @@ namespace Trixy.BotWorker
 
                 throw new Exception(slashSupported.Error?.Message, slashSupported.Error as Exception);
             }
-            else
-            {
-                var slashUpdated = await _slashService.UpdateSlashCommandsAsync(ct: stoppingToken);
-                if (!slashUpdated.IsSuccess)
-                {
-                    _logger.LogWarning
-                        (
-                            "Cannot update slash commands :(",
-                            slashUpdated.Error.Message
-                        );
-
-                    throw new Exception(slashUpdated.Error?.Message, slashUpdated.Error as Exception);
-                }
-            }
 
             var result = await _discordGatewayClient.RunAsync(stoppingToken);
             if (!result.IsSuccess)

@@ -3,6 +3,7 @@ using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Gateway.Commands;
 using Remora.Discord.API.Objects;
+using Remora.Discord.Commands.Services;
 using Remora.Discord.Gateway;
 using Remora.Discord.Gateway.Responders;
 using Remora.Discord.Gateway.Services;
@@ -13,14 +14,16 @@ using System.Threading.Tasks;
 namespace Trixy.Bot.Responders
 {
     public class ReadyResponder
-        : IResponder<IReady>
+        : IResponder<IReady>, IResponder<IGuildCreate>
     {
         public ReadyResponder(
             DiscordGatewayClient gatewayClient,
-            ILogger<ResponderService> logger)
+            ILogger<ResponderService> logger,
+            SlashService slashService)
         {
             _gatewayClient = gatewayClient;
             _logger = logger;
+            _slashService = slashService;
         }
 
         public Task<Result> RespondAsync(IReady gatewayEvent, CancellationToken ct = default)
@@ -36,7 +39,14 @@ namespace Trixy.Bot.Responders
             return Task.FromResult(Result.FromSuccess());
         }
 
+        public async Task<Result> RespondAsync(IGuildCreate gatewayEvent, CancellationToken ct = default)
+        {
+            await _slashService.UpdateSlashCommandsAsync(gatewayEvent.ID);
+            return Result.FromSuccess();
+        }
+
         private readonly DiscordGatewayClient _gatewayClient;
         private readonly ILogger<ResponderService> _logger;
+        private readonly SlashService _slashService;
     }
 }
