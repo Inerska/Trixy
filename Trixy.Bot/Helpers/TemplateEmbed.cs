@@ -12,12 +12,10 @@ namespace Trixy.Bot.Helpers
         public async static Task<Embed> GetSocialEmbed(string header, OneOf<SafeForWork, NotSafeForWork> category)
         {
             var image = await ExternalFetcher.GetRandomThemeGif(category);
-            Embed embed = new(Description: header,
+            return new Embed(Description: header,
                               Colour: Colors.Embed.TransparentColor,
                               Image: new EmbedImage(Url: image),
                               Footer: new EmbedFooter($"{category.Value} · {DateTime.Now.ToShortTimeString()}"));
-
-            return embed;
         }
     }
 }
