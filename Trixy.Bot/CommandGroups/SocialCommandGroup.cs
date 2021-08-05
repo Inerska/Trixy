@@ -15,20 +15,21 @@ namespace Trixy.Bot.CommandGroups
     internal class SocialCommandGroup
         : CommandGroup
     {
-        private readonly IDiscordRestChannelAPI _channelApi;
-        private readonly ICommandContext _context;
-        private readonly MessageContext _messageContext;
 
         public SocialCommandGroup(
             IDiscordRestChannelAPI channelApi,
             ICommandContext context,
-            MessageContext messageContext)
+            MessageContext messageContext,
+            IDiscordRestWebhookAPI discordRestWebhookApi,
+            InteractionContext interactionContext)
         {
             _channelApi = channelApi;
             _context = context;
             _messageContext = messageContext;
+            _discordRestWebhookApi = discordRestWebhookApi;
+            _interactionContext = interactionContext;
         }
-
+        #region CommandsGroups
         [Command("wave")]
         [Description("Wave someone")]
         public async Task<IResult> WaveCommandAsync(IUser? target)
@@ -161,6 +162,7 @@ namespace Trixy.Bot.CommandGroups
         {
             return await SendSafeSocialEmbedAsync(SafeForWork.SLAP, target);
         }
+        #endregion
 
         private async Task<IResult> SendSafeSocialEmbedAsync(SafeForWork sfwSocialTheme, IUser? target = null)
         {
@@ -172,7 +174,15 @@ namespace Trixy.Bot.CommandGroups
 
             var embed = await TemplateEmbed.GetSocialEmbed(header, sfwSocialTheme);
 
-            var result = await _channelApi.CreateMessageAsync(_context.ChannelID, embeds: new[] { embed });
+            //var result = await _channelApi.CreateMessageAsync(_context.ChannelID, embeds: new[] { embed });
+            var result = await _discordRestWebhookApi.CreateFollowupMessageAsync
+                (
+                    _interactionContext.ApplicationID,
+                    _interactionContext.Token,
+                    embeds: new[] { embed },
+                    ct: CancellationToken
+                );
+
             return result.IsSuccess
                 ? Result.FromSuccess()
                 : Result.FromError(result.Error);
@@ -193,5 +203,11 @@ namespace Trixy.Bot.CommandGroups
                 ? Result.FromSuccess()
                 : Result.FromError(result.Error);
         }
+
+        private readonly IDiscordRestChannelAPI _channelApi;
+        private readonly ICommandContext _context;
+        private readonly MessageContext _messageContext;
+        private readonly IDiscordRestWebhookAPI _discordRestWebhookApi;
+        private readonly InteractionContext _interactionContext;
     }
 }
