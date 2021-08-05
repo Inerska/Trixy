@@ -14,7 +14,6 @@ namespace Trixy.Bot
             => services
                 .AddDiscordGateway(_ => GetSecretToken())
                 .AddDiscordCommands(enableSlash: true)
-                .Configure<CommandResponderOptions>(options => options.Prefix = "!")
                 .AddTrixyCommands()
                 .AddTrixyResponders()
             ;

@@ -8,7 +8,6 @@ using Remora.Discord.API.Abstractions.Objects;
 using Trixy.Bot.Helpers;
 using static Trixy.Bot.Helpers.SocialTheme;
 using System.ComponentModel;
-using Remora.Discord.Commands.Conditions;
 
 namespace Trixy.Bot.CommandGroups
 {
@@ -33,9 +32,6 @@ namespace Trixy.Bot.CommandGroups
 
         [Command("poke"), Description("Poke poke someone")]
         public async Task<IResult> PokeCommandAsync(IUser? target) => await SendSafeSocialEmbedAsync(SafeForWork.POKE, target);
-
-        [Command("wink"), Description("Wink ;)")]
-        public async Task<IResult> WinkNullArgCommandAsync() => await SendSafeSocialEmbedAsync(SafeForWork.WINK, null);
 
         [Command("wink"), Description("Wave someone ;)")]
         public async Task<IResult> WinkCommandAsync(IUser? target) => await SendSafeSocialEmbedAsync(SafeForWork.WINK, target);
@@ -76,9 +72,6 @@ namespace Trixy.Bot.CommandGroups
         [Command("hug"), Description("Highfive someone")]
         public async Task<IResult> HugCommandAsync(IUser? target) => await SendSafeSocialEmbedAsync(SafeForWork.HUG, target);
 
-        [Command("cry"), Description("Cry ;-;")]
-        public async Task<IResult> CryCommandAsync() => await SendSafeSocialEmbedAsync(SafeForWork.CRY, null);
-
         [Command("cuddle"), Description("Cuddle someone")]
         public async Task<IResult> CuddleCommandAsync(IUser? target) => await SendSafeSocialEmbedAsync(SafeForWork.CUDDLE, target);
 
@@ -88,7 +81,7 @@ namespace Trixy.Bot.CommandGroups
         [Command("slap"), Description("Slap someone")]
         public async Task<IResult> SlapCommandAsync(IUser? target) => await SendSafeSocialEmbedAsync(SafeForWork.SLAP, target);
 
-        private async Task<IResult> SendSafeSocialEmbedAsync(SafeForWork sfwSocialTheme, IUser? target)
+        private async Task<IResult> SendSafeSocialEmbedAsync(SafeForWork sfwSocialTheme, IUser? target = null)
         {
             await _channelApi.DeleteMessageAsync(_context.ChannelID, _messageContext.MessageID);
 
@@ -104,7 +97,7 @@ namespace Trixy.Bot.CommandGroups
                 : Result.FromError(result.Error);
         }
 
-        private async Task<IResult> SendNotSafeSocialEmbedAsync(NotSafeForWork nsfwSocialTheme, IUser? target)
+        private async Task<IResult> SendNotSafeSocialEmbedAsync(NotSafeForWork nsfwSocialTheme, IUser? target = null)
         {
             await _channelApi.DeleteMessageAsync(_context.ChannelID, _messageContext.MessageID);
 
