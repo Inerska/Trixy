@@ -8,6 +8,7 @@ using Remora.Discord.API.Abstractions.Objects;
 using Trixy.Bot.Helpers;
 using static Trixy.Bot.Helpers.SocialTheme;
 using System.ComponentModel;
+using Remora.Discord.Commands.Conditions;
 
 namespace Trixy.Bot.CommandGroups
 {

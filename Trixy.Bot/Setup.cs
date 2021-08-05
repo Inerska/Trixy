@@ -4,6 +4,7 @@ using Remora.Discord.Commands.Responders;
 using Remora.Discord.Gateway.Extensions;
 using System;
 using Trixy.Bot.CommandGroups;
+using Trixy.Bot.Responders;
 
 namespace Trixy.Bot
 {
@@ -15,6 +16,7 @@ namespace Trixy.Bot
                 .AddDiscordCommands()
                 .Configure<CommandResponderOptions>(options => options.Prefix = "!")
                 .AddTrixyCommands()
+                .AddTrixyResponders()
             ;
 
         private static string GetSecretToken()
