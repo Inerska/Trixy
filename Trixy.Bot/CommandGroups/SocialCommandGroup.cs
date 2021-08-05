@@ -15,7 +15,6 @@ namespace Trixy.Bot.CommandGroups
     internal class SocialCommandGroup
         : CommandGroup
     {
-
         public SocialCommandGroup(
             IDiscordRestChannelAPI channelApi,
             MessageContext messageContext,
@@ -27,6 +26,7 @@ namespace Trixy.Bot.CommandGroups
             _discordRestWebhookApi = discordRestWebhookApi;
             _interactionContext = interactionContext;
         }
+        
         #region CommandsGroups
         [Command("wave")]
         [Description("Posts an embed with a anime gif associated to wave theme.")]
