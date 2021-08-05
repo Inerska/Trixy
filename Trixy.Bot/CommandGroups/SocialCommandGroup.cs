@@ -8,6 +8,7 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
 using Trixy.Bot.Helpers;
 using static Trixy.Bot.Helpers.SocialTheme;
+using Remora.Discord.Rest.API;
 
 namespace Trixy.Bot.CommandGroups
 {
@@ -24,20 +25,27 @@ namespace Trixy.Bot.CommandGroups
             _messageContext = messageContext;
         }
 
+        [Command("cry")]
+        public async Task<IResult> CryCommandAsync() => await SendSafeSocialEmbedAsync(SafeForWork.CRY, null);
+
         [Command("cuddle")]
-        public async Task<IResult> CuddleCommandAsync(IUser target) => await SendSafeSocialEmbedAsync(SafeForWork.CUDDLE, target);
+        public async Task<IResult> CuddleCommandAsync(IUser? target) => await SendSafeSocialEmbedAsync(SafeForWork.CUDDLE, target);
 
         [Command("bully")]
-        public async Task<IResult> BullyCommandAsync(IUser target) => await SendSafeSocialEmbedAsync(SafeForWork.BULLY, target);
+        public async Task<IResult> BullyCommandAsync(IUser? target) => await SendSafeSocialEmbedAsync(SafeForWork.BULLY, target);
 
         [Command("slap")]
-        public async Task<IResult> SlapCommandAsync(IUser target) => await SendSafeSocialEmbedAsync(SafeForWork.SLAP, target);
+        public async Task<IResult> SlapCommandAsync(IUser? target) => await SendSafeSocialEmbedAsync(SafeForWork.SLAP, target);
 
-        private async Task<IResult> SendSafeSocialEmbedAsync(SafeForWork sfwSocialTheme, IUser target)
+        private async Task<IResult> SendSafeSocialEmbedAsync(SafeForWork sfwSocialTheme, IUser? target)
         {
             await _channelApi.DeleteMessageAsync(_context.ChannelID, _messageContext.MessageID);
 
-            Embed embed = await TemplateEmbed.GetSocialEmbed($"**{_context.User.Username}** {sfwSocialTheme.ToString().ToLower()}s **{target.Username}**", sfwSocialTheme);
+            var header = target is null
+                ? $"**{_context.User.Username}** {sfwSocialTheme.ToString().ToLower()}s"
+                : $"**{_context.User.Username}** {sfwSocialTheme.ToString().ToLower()}s **{target?.Username}**";
+
+            var embed = await TemplateEmbed.GetSocialEmbed(header, sfwSocialTheme);
 
             var result = await _channelApi.CreateMessageAsync(_context.ChannelID, embeds: new[] { embed });
             return result.IsSuccess
@@ -45,11 +53,15 @@ namespace Trixy.Bot.CommandGroups
                 : Result.FromError(result.Error);
         }
 
-        private async Task<IResult> SendNotSafeSocialEmbedAsync(NotSafeForWork nsfwSocialTheme, IUser target)
+        private async Task<IResult> SendNotSafeSocialEmbedAsync(NotSafeForWork nsfwSocialTheme, IUser? target)
         {
             await _channelApi.DeleteMessageAsync(_context.ChannelID, _messageContext.MessageID);
 
-            var embed = await TemplateEmbed.GetSocialEmbed($"**{_context.User.Username}** {nsfwSocialTheme.ToString().ToLower()}s **{target.Username}**", nsfwSocialTheme);
+            var header = target is null
+                ? $"**{_context.User.Username}** {nsfwSocialTheme.ToString().ToLower()}s"
+                : $"**{_context.User.Username}** {nsfwSocialTheme.ToString().ToLower()}s **{target?.Username}**";
+
+            var embed = await TemplateEmbed.GetSocialEmbed(header, nsfwSocialTheme);
 
             var result = await _channelApi.CreateMessageAsync(_context.ChannelID, embeds: new[] { embed });
             return result.IsSuccess
