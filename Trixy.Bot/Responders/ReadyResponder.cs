@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 namespace Trixy.Bot.Responders
 {
     public class ReadyResponder
-        : IResponder<GuildCreate>
+        : IResponder<IReady>
     {
         public ReadyResponder(
             SlashService slashService,
@@ -27,7 +27,7 @@ namespace Trixy.Bot.Responders
             _logger = logger;
         }
 
-        public async Task<Result> RespondAsync(GuildCreate gatewayEvent, CancellationToken ct = default)
+        public async Task<Result> RespondAsync(IReady gatewayEvent, CancellationToken ct = default)
         {
             var presenceCommand = new UpdatePresence(ClientStatus.Online, false, null, new IActivity[]
             {
@@ -35,7 +35,6 @@ namespace Trixy.Bot.Responders
             });
 
             _gatewayClient.SubmitCommandAsync(presenceCommand);
-            await _slashService.UpdateSlashCommandsAsync(gatewayEvent.ID);
             _logger.LogInformation("Operational !");
 
             return Result.FromSuccess();
