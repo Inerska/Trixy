@@ -5,10 +5,8 @@ using Remora.Discord.Commands.Contexts;
 using Remora.Results;
 using System.Threading.Tasks;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.API.Objects;
 using Trixy.Bot.Helpers;
 using static Trixy.Bot.Helpers.SocialTheme;
-using Remora.Discord.Rest.API;
 
 namespace Trixy.Bot.CommandGroups
 {
