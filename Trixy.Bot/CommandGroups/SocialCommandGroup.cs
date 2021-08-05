@@ -26,7 +26,7 @@ namespace Trixy.Bot.CommandGroups
         #region CommandsGroups
         [Command("wave")]
         [Description("Posts an embed with a anime gif associated to wave theme.")]
-        public async Task<IResult> WaveCommandAsync([Description("(Mandatory) The user to wave to.")] IUser? target)
+        public async Task<IResult> WaveCommandAsync([Description("(Mandatory) The user to wave to.")] IUser? target = null)
         {
             return await SendSafeSocialEmbedAsync(SafeForWork.WAVE, target);
         }
@@ -47,7 +47,7 @@ namespace Trixy.Bot.CommandGroups
 
         [Command("wink")]
         [Description("Posts an embed with a anime gif associated to wink theme.")]
-        public async Task<IResult> WinkCommandAsync([Description("(Mandatory) The user to wink with.")] IUser? target)
+        public async Task<IResult> WinkCommandAsync([Description("(Mandatory) The user to wink with.")] IUser? target = null)
         {
             return await SendSafeSocialEmbedAsync(SafeForWork.WINK, target);
         }
