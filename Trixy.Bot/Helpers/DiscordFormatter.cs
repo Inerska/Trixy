@@ -2,9 +2,9 @@
 
 namespace Trixy.Bot.Helpers
 {
-    public static class DiscordFormatter
+    internal static class DiscordFormatter
     {
-        public static string Mention(this Snowflake snowflake) => $"<@{snowflake.Value}>";
-        public static string SurroundWithAsterisks(string value) => $"**{value}**";
+        internal static string Mention(this Snowflake snowflake) => $"<@{snowflake.Value}>";
+        internal static string SurroundWithAsterisks(string value) => $"**{value}**";
     }
 }

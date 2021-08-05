@@ -7,9 +7,9 @@ using Trixy.Common;
 
 namespace Trixy.Bot.Helpers
 {
-    public static class TemplateEmbed
+    internal static class TemplateEmbed
     {
-        public async static Task<Embed> GetSocialEmbed(string header, OneOf<SafeForWork, NotSafeForWork> category)
+        internal static async Task<Embed> GetSocialEmbed(string header, OneOf<SafeForWork, NotSafeForWork> category)
         {
             var image = await ExternalFetcher.GetRandomThemeGif(category);
             return new Embed(Description: header,

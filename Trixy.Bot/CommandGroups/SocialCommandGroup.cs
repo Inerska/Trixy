@@ -12,7 +12,7 @@ using static Trixy.Bot.Helpers.DiscordFormatter;
 
 namespace Trixy.Bot.CommandGroups
 {
-    internal class SocialCommandGroup
+    public class SocialCommandGroup
         : CommandGroup
     {
         public SocialCommandGroup(

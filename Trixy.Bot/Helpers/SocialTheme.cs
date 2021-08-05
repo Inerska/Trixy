@@ -1,12 +1,11 @@
 using OneOf;
-using System;
 using System.ComponentModel;
 
 namespace Trixy.Bot.Helpers
 {
-    public static class SocialTheme
+    internal static class SocialTheme
     {
-        public enum NotSafeForWork
+        internal enum NotSafeForWork
         {
             WAIFU,
             NEKO,
@@ -14,7 +13,7 @@ namespace Trixy.Bot.Helpers
             BLOWJOB
         }
 
-        public enum SafeForWork
+        internal enum SafeForWork
         {
             WAIFU,
             NEKO,
@@ -43,7 +42,7 @@ namespace Trixy.Bot.Helpers
             DANCE
         }
 
-        public static string Stringify(OneOf<SafeForWork, NotSafeForWork> category) => category.Value switch
+        internal static string Stringify(OneOf<SafeForWork, NotSafeForWork> category) => category.Value switch
         {
             SafeForWork.BULLY => "bullies",
             SafeForWork.CUDDLE => "cuddles",
