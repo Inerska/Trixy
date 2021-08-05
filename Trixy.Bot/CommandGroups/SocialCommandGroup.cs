@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Remora.Discord.API.Abstractions.Objects;
 using Trixy.Bot.Helpers;
 using static Trixy.Bot.Helpers.SocialTheme;
+using System.ComponentModel;
 
 namespace Trixy.Bot.CommandGroups
 {
@@ -23,67 +24,67 @@ namespace Trixy.Bot.CommandGroups
             _messageContext = messageContext;
         }
 
-        [Command("wave")]
+        [Command("wave"), Description("Wave someone")]
         public async Task<IResult> WaveCommandAsync(IUser? target) => await SendSafeSocialEmbedAsync(SafeForWork.WAVE, target);
 
-        [Command("dance")]
+        [Command("dance"), Description("Just dance with style")]
         public async Task<IResult> DanceCommandAsync() => await SendSafeSocialEmbedAsync(SafeForWork.DANCE, null);
 
-        [Command("poke")]
+        [Command("poke"), Description("Poke poke someone")]
         public async Task<IResult> PokeCommandAsync(IUser? target) => await SendSafeSocialEmbedAsync(SafeForWork.POKE, target);
 
-        [Command("wink")]
+        [Command("wink"), Description("Wink ;)")]
         public async Task<IResult> WinkNullArgCommandAsync() => await SendSafeSocialEmbedAsync(SafeForWork.WINK, null);
 
-        [Command("wink")]
+        [Command("wink"), Description("Wave someone ;)")]
         public async Task<IResult> WinkCommandAsync(IUser? target) => await SendSafeSocialEmbedAsync(SafeForWork.WINK, target);
 
-        [Command("kick")]
+        [Command("kick"), Description("Kick someone")]
         public async Task<IResult> KickCommandAsync(IUser? target) => await SendSafeSocialEmbedAsync(SafeForWork.KICK, target);
 
-        [Command("kill")]
+        [Command("kill"), Description("Kill someone")]
         public async Task<IResult> KillCommandAsync(IUser? target) => await SendSafeSocialEmbedAsync(SafeForWork.KILL, target);
 
-        [Command("bite")]
+        [Command("bite"), Description("Bite someone")]
         public async Task<IResult> BiteCommandAsync(IUser? target) => await SendSafeSocialEmbedAsync(SafeForWork.BITE, target);
 
-        [Command("nom")]
+        [Command("nom"), Description("Chew someone")]
         public async Task<IResult> NomCommandAsync(IUser? target) => await SendSafeSocialEmbedAsync(SafeForWork.NOM, target);
 
-        [Command("highfive")]
+        [Command("highfive"), Description("Highfive someone")]
         public async Task<IResult> HighFiveCommandAsync(IUser? target) => await SendSafeSocialEmbedAsync(SafeForWork.HIGHFIVE, target);
 
-        [Command("smile")]
+        [Command("smile"), Description("Smile :)")]
         public async Task<IResult> SmileCommandAsync() => await SendSafeSocialEmbedAsync(SafeForWork.SMILE, null);
 
-        [Command("blush")]
+        [Command("blush"), Description("Blush >//<")]
         public async Task<IResult> BlushCommandAsync() => await SendSafeSocialEmbedAsync(SafeForWork.BLUSH, null);
 
-        [Command("smug")]
+        [Command("smug"), Description("Smug :')")]
         public async Task<IResult> SmugCommandAsync() => await SendSafeSocialEmbedAsync(SafeForWork.SMUG, null);
 
-        [Command("pat", "patpat")]
+        [Command("pat", "patpat"), Description("Patpat someone")]
         public async Task<IResult> PatCommandAsync(IUser? target) => await SendSafeSocialEmbedAsync(SafeForWork.PAT, target);
 
-        [Command("lick")]
+        [Command("lick"), Description("Lick someone")]
         public async Task<IResult> LickCommandAsync(IUser? target) => await SendSafeSocialEmbedAsync(SafeForWork.LICK, target);
 
-        [Command("kiss")]
+        [Command("kiss"), Description("Kiss someone :*")]
         public async Task<IResult> KissCommandAsync(IUser? target) => await SendSafeSocialEmbedAsync(SafeForWork.KISS, target);
 
-        [Command("hug")]
+        [Command("hug"), Description("Highfive someone")]
         public async Task<IResult> HugCommandAsync(IUser? target) => await SendSafeSocialEmbedAsync(SafeForWork.HUG, target);
 
-        [Command("cry")]
+        [Command("cry"), Description("Cry ;-;")]
         public async Task<IResult> CryCommandAsync() => await SendSafeSocialEmbedAsync(SafeForWork.CRY, null);
 
-        [Command("cuddle")]
+        [Command("cuddle"), Description("Cuddle someone")]
         public async Task<IResult> CuddleCommandAsync(IUser? target) => await SendSafeSocialEmbedAsync(SafeForWork.CUDDLE, target);
 
-        [Command("bully")]
+        [Command("bully"), Description("Bully someone :@")]
         public async Task<IResult> BullyCommandAsync(IUser? target) => await SendSafeSocialEmbedAsync(SafeForWork.BULLY, target);
 
-        [Command("slap")]
+        [Command("slap"), Description("Slap someone")]
         public async Task<IResult> SlapCommandAsync(IUser? target) => await SendSafeSocialEmbedAsync(SafeForWork.SLAP, target);
 
         private async Task<IResult> SendSafeSocialEmbedAsync(SafeForWork sfwSocialTheme, IUser? target)
