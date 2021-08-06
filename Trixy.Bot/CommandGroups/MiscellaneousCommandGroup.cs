@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.ComponentModel;
+using System.Threading.Tasks;
 using Remora.Commands.Attributes;
 using Remora.Commands.Groups;
 using Remora.Discord.API;
@@ -22,8 +23,9 @@ namespace Trixy.Bot.CommandGroups
             _discordRestUserApi = discordRestUserApi;
         }
 
-        [Command("me", "info", "about", "bot", "trixy")]
-        private async Task<IResult> AboutMeCommandAsync()
+        [Command("info", "about", "bot", "trixy")]
+        [Description("Get some information about me.")]
+        public async Task<IResult> AboutMeCommandAsync()
         {
             var userResult = await _discordRestUserApi.GetCurrentUserAsync();
             var avatarUrlResult = CDN.GetUserAvatarUrl(userResult.Entity);
