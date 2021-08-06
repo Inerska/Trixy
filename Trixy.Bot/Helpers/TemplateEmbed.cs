@@ -32,7 +32,8 @@ namespace Trixy.Bot.Helpers
             return new Embed
             (
                 Description: builder.ToString(),
-                Thumbnail: new EmbedThumbnail(botAvatarUrl)
+                Thumbnail: new EmbedThumbnail(botAvatarUrl),
+                Colour: Colors.Embed.TransparentColor
             );
         }
     }
