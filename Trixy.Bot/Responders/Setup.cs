@@ -8,6 +8,7 @@ namespace Trixy.Bot.Responders
         internal static IServiceCollection AddTrixyResponders(this IServiceCollection services)
             => services
                 .AddResponder<ReadyResponder>(Remora.Discord.Gateway.Responders.ResponderGroup.Early)
+                .AddResponder<MentionSelfResponder>()
             ;
     }
 }
