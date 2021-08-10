@@ -25,26 +25,7 @@ namespace Trixy.Bot.CommandGroups
             _interactionContext = interactionContext;
             _discordRestWebhookApi = discordRestWebhookApi;
         }
-
-        [Command("trigger")]
-        [Description("Posts your triggered avatar.")]
-        public async Task<IResult> TriggerAvatarCommandAsync()
-        {
-            var user = _interactionContext.User;
-            var userAvatar = CDN.GetUserAvatarUrl(user);
-            var embedImage = await ExternalFetcher.GetTriggerAvatarAsEmbedImage(userAvatar.Entity);
-
-            var result = await _discordRestWebhookApi.CreateFollowupMessageAsync
-            (
-                _interactionContext.ApplicationID,
-                _interactionContext.Token,
-                embeds: new[] { new Embed(Image: embedImage) },
-                ct: CancellationToken
-            );
-
-            return result.IsSuccess
-                ? Result.FromSuccess()
-                : Result.FromError(result.Error);
-        }
+        
+        
     }
 }

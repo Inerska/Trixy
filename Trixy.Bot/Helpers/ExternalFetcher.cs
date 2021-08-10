@@ -35,27 +35,6 @@ namespace Trixy.Bot.Helpers
 
             return result?.Url;
         }
-
-        public static async Task<EmbedImage> GetTriggerAvatarAsEmbedImage(Uri avatarUrl)
-        {
-            var baseUrl = Environment.GetEnvironmentVariable("TRIGGER_API_BASE_URL_");
-            var uri = new Uri(baseUrl + avatarUrl);
-
-            if (baseUrl is null)
-                throw new ArgumentNullException(nameof(baseUrl));
-
-            var request = WebRequest.Create(uri);
-            request.Method = "GET";
-            request.Timeout = 5000;
-
-            var response = await request.GetResponseAsync();
-            var stream = response.GetResponseStream();
-            var reader = new StreamReader(stream);
-            var json = await reader.ReadToEndAsync();
-
-            return new EmbedImage(json);
-        }
-
         private sealed record RandomThemeApiResponse(string Url);
     }
 }
