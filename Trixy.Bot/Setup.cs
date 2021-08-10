@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Gateway.Extensions;
@@ -9,12 +10,14 @@ namespace Trixy.Bot
 {
     public static class Setup
     {
-        public static IServiceCollection AddTrixyBot(this IServiceCollection services)
+        public static IServiceCollection AddTrixyBot(
+            this IServiceCollection services,
+            IConfiguration configuration)
         {
             return services
                 .AddDiscordGateway(_ => GetSecretToken())
                 .AddDiscordCommands(true)
-                .AddTrixyCommands()
+                .AddTrixyCommands(configuration)
                 .AddTrixyResponders();
         }
 
