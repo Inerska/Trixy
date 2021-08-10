@@ -5,7 +5,6 @@ using System.Net;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using OneOf;
-using Remora.Discord.API.Objects;
 using static Trixy.Bot.Helpers.SocialTheme;
 
 namespace Trixy.Bot.Helpers
@@ -35,6 +34,7 @@ namespace Trixy.Bot.Helpers
 
             return result?.Url;
         }
+
         private sealed record RandomThemeApiResponse(string Url);
     }
 }

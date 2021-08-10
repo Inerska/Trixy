@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Trixy.Common", "Trixy.Commo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trixy.Bot.Test", "Trixy.Bot.Test\Trixy.Bot.Test.csproj", "{2D500414-3083-4B4A-B39A-A418FC3D25CF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trixy.Abstractions", "Trixy.Abstractions\Trixy.Abstractions.csproj", "{6E5E0313-F110-4CCC-9F55-21DF634D0923}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{2D500414-3083-4B4A-B39A-A418FC3D25CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2D500414-3083-4B4A-B39A-A418FC3D25CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2D500414-3083-4B4A-B39A-A418FC3D25CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E5E0313-F110-4CCC-9F55-21DF634D0923}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E5E0313-F110-4CCC-9F55-21DF634D0923}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E5E0313-F110-4CCC-9F55-21DF634D0923}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E5E0313-F110-4CCC-9F55-21DF634D0923}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
