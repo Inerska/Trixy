@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Remora.Discord.Commands.Services;
@@ -11,19 +12,21 @@ namespace Trixy.BotWorker
     public sealed class Worker
         : BackgroundService
     {
+        private readonly IConfiguration _configuration;
         private readonly DiscordGatewayClient _discordGatewayClient;
-
         private readonly ILogger<Worker> _logger;
         private readonly SlashService _slashService;
 
         public Worker(
             ILogger<Worker> logger,
             DiscordGatewayClient discordGatewayClient,
-            SlashService slashService)
+            SlashService slashService,
+            IConfiguration configuration)
         {
             _logger = logger;
             _discordGatewayClient = discordGatewayClient;
             _slashService = slashService;
+            _configuration = configuration;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)

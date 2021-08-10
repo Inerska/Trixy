@@ -15,11 +15,11 @@ namespace Trixy.BotWorker
         private static IHostBuilder CreateHostBuilder(string[] args)
         {
             return Host.CreateDefaultBuilder(args)
-                .ConfigureServices((_, services) => services
-                    .AddLogging(c => c.AddConsole())
-                    .AddHostedService<Worker>()
-                    .AddTrixyBot()
-                    .BuildServiceProvider());
+                .ConfigureServices((context, services) =>
+                    ServiceCollectionContainerBuilderExtensions.BuildServiceProvider(services
+                        .AddLogging(c => c.AddConsole())
+                        .AddHostedService<Worker>()
+                        .AddTrixyBot(context.Configuration)));
         }
     }
 }

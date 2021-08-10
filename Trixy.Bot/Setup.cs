@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Gateway.Extensions;
+using Trixy.Abstractions.Extensions;
 using Trixy.Bot.CommandGroups;
 using Trixy.Bot.Responders;
 
