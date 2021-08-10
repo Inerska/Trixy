@@ -30,8 +30,8 @@ namespace Trixy.Bot.Responders
         public async Task<Result> RespondAsync(IMessageCreate gatewayEvent, CancellationToken ct = default)
         {
             var userResult = await _discordRestUserApi.GetCurrentUserAsync(ct);
-            var avatarUrlResult = CDN.GetUserAvatarUrl(userResult.Entity);
-            var embed = TemplateEmbed.GetAboutMeEmbed(avatarUrlResult.Entity?.ToString(), userResult.Entity.ID);
+            var avatarUrlResult = CDN.GetUserAvatarUrl(userResult.Entity!);
+            var embed = TemplateEmbed.GetAboutMeEmbed(avatarUrlResult.Entity?.ToString(), userResult.Entity!.ID);
 
             var botMention = userResult.Entity.ID.Mention();
 

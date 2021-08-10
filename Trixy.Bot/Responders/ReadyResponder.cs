@@ -33,7 +33,7 @@ namespace Trixy.Bot.Responders
         public async Task<Result> RespondAsync(IGuildCreate gatewayEvent, CancellationToken ct = default)
         {
             _logger.LogInformation("Setting up slash-commands");
-            var result = await _slashService.UpdateSlashCommandsAsync(gatewayEvent.ID);
+            var result = await _slashService.UpdateSlashCommandsAsync(gatewayEvent.ID, ct);
             return result.IsSuccess
                 ? Result.FromSuccess()
                 : Result.FromError(result.Error);
