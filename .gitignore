@@ -15,6 +15,8 @@ Trixy.Bot.Test/obj
 Trixy.BotWorker/bin
 Trixy.BotWorker/obj
 Trixy.BotWorker/Properties/launchSettings.json
+Trixy.BotWorker/appsettings.json
+Trixy.BotWorker/appsettings.Development.json
 
 Trixy.Common/bin
 Trixy.Common/obj
