@@ -17,3 +17,6 @@ Trixy.BotWorker/Properties/launchSettings.json
 
 Trixy.Common/bin
 Trixy.Common/obj
+
+Trixy.Abstractions/bin
+Trixy.Abstractions/obj
