@@ -7,6 +7,7 @@ Trixy.Bot/bin
 Trixy.Bot/obj
 Trixy.Bot/Properties/launchSettings.json
 Trixy.Bot/.idea
+Trixy.Bot/appsettings.json
 
 Trixy.Bot.Test/bin
 Trixy.Bot.Test/obj
