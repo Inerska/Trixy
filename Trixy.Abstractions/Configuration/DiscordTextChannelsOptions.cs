@@ -1,4 +1,4 @@
-﻿using Trixy.Abstractions.Interaces;
+﻿using Trixy.Abstractions.Interfaces;
 
 namespace Trixy.Abstractions
 {

@@ -1,4 +1,4 @@
-﻿namespace Trixy.Abstractions.Interaces
+﻿namespace Trixy.Abstractions.Interfaces
 {
     internal interface IModuleOptions
     {
