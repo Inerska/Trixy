@@ -40,11 +40,10 @@ namespace Trixy.Bot.Responders
 
             await _discordRestChannelApi.DeleteMessageAsync(gatewayEvent.ChannelID, gatewayEvent.ID, ct: ct);
 
-            var result = await _discordRestChannelApi.CreateMessageAsync
-            (
+            var result = await _discordRestChannelApi.CreateMessageAsync(
                 gatewayEvent.ChannelID,
-                messageReference: gatewayEvent.MessageReference,
                 embeds: new[] { embed }, ct: ct);
+
             return result.IsSuccess
                 ? Result.FromSuccess()
                 : Result.FromError(result.Error);

@@ -1,8 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System;
+using Microsoft.Extensions.DependencyInjection;
 using Remora.Discord.Commands.Extensions;
-using Remora.Discord.Commands.Responders;
 using Remora.Discord.Gateway.Extensions;
-using System;
 using Trixy.Bot.CommandGroups;
 using Trixy.Bot.Responders;
 
@@ -11,12 +10,13 @@ namespace Trixy.Bot
     public static class Setup
     {
         public static IServiceCollection AddTrixyBot(this IServiceCollection services)
-            => services
+        {
+            return services
                 .AddDiscordGateway(_ => GetSecretToken())
-                .AddDiscordCommands(enableSlash: true)
+                .AddDiscordCommands(true)
                 .AddTrixyCommands()
-                .AddTrixyResponders()
-            ;
+                .AddTrixyResponders();
+        }
 
         private static string GetSecretToken()
         {

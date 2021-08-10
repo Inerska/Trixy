@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Threading.Tasks;
+using OneOf;
 using Remora.Commands.Attributes;
 using Remora.Commands.Groups;
 using Remora.Discord.API.Abstractions.Objects;
@@ -9,13 +10,15 @@ using Remora.Results;
 using Trixy.Bot.Helpers;
 using static Trixy.Bot.Helpers.SocialTheme;
 using static Trixy.Bot.Helpers.DiscordFormatter;
-using OneOf;
 
 namespace Trixy.Bot.CommandGroups
 {
     public class SocialCommandGroup
         : CommandGroup
     {
+        private readonly IDiscordRestWebhookAPI _discordRestWebhookApi;
+        private readonly InteractionContext _interactionContext;
+
         public SocialCommandGroup(
             IDiscordRestWebhookAPI discordRestWebhookApi,
             InteractionContext interactionContext)
@@ -24,10 +27,33 @@ namespace Trixy.Bot.CommandGroups
             _interactionContext = interactionContext;
         }
 
+        private async Task<IResult> SendSocialEmbedAsync(OneOf<SafeForWork, NotSafeForWork> theme, IUser? target = null)
+        {
+            var header = target is null
+                ? $"{SurroundWithAsterisks(_interactionContext.User.Username)} {Stringify(theme)}"
+                : $"{SurroundWithAsterisks(_interactionContext.User.Username)} {Stringify(theme)} {SurroundWithAsterisks(target.Username)}";
+
+            var embed = await TemplateEmbed.GetSocialEmbed(header, theme);
+
+            var result = await _discordRestWebhookApi.CreateFollowupMessageAsync
+            (
+                _interactionContext.ApplicationID,
+                _interactionContext.Token,
+                embeds: new[] { embed },
+                ct: CancellationToken
+            );
+
+            return result.IsSuccess
+                ? Result.FromSuccess()
+                : Result.FromError(result.Error);
+        }
+
         #region CommandsGroups
+
         [Command("wave")]
         [Description("Posts an embed with a anime gif associated to wave theme.")]
-        public async Task<IResult> WaveCommandAsync([Description("(Mandatory) The user to wave to.")] IUser? target = null)
+        public async Task<IResult> WaveCommandAsync(
+            [Description("(Mandatory) The user to wave to.")] IUser? target = null)
         {
             return await SendSocialEmbedAsync(SafeForWork.WAVE, target);
         }
@@ -48,7 +74,8 @@ namespace Trixy.Bot.CommandGroups
 
         [Command("wink")]
         [Description("Posts an embed with a anime gif associated to wink theme.")]
-        public async Task<IResult> WinkCommandAsync([Description("(Mandatory) The user to wink with.")] IUser? target = null)
+        public async Task<IResult> WinkCommandAsync(
+            [Description("(Mandatory) The user to wink with.")] IUser? target = null)
         {
             return await SendSocialEmbedAsync(SafeForWork.WINK, target);
         }
@@ -157,30 +184,7 @@ namespace Trixy.Bot.CommandGroups
         {
             return await SendSocialEmbedAsync(SafeForWork.SLAP, target);
         }
+
         #endregion
-
-        private async Task<IResult> SendSocialEmbedAsync(OneOf<SafeForWork, NotSafeForWork> theme, IUser? target = null)
-        {
-            var header = target is null
-                ? $"{SurroundWithAsterisks(_interactionContext.User.Username)} {Stringify(theme)}"
-                : $"{SurroundWithAsterisks(_interactionContext.User.Username)} {Stringify(theme)} {SurroundWithAsterisks(target.Username)}";
-
-            var embed = await TemplateEmbed.GetSocialEmbed(header, theme);
-
-            var result = await _discordRestWebhookApi.CreateFollowupMessageAsync
-                (
-                    _interactionContext.ApplicationID,
-                    _interactionContext.Token,
-                    embeds: new[] { embed },
-                    ct: CancellationToken
-                );
-
-            return result.IsSuccess
-                ? Result.FromSuccess()
-                : Result.FromError(result.Error);
-        }
-
-        private readonly IDiscordRestWebhookAPI _discordRestWebhookApi;
-        private readonly InteractionContext _interactionContext;
     }
 }

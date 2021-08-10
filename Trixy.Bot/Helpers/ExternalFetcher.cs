@@ -1,11 +1,11 @@
 using System;
-using System.Threading.Tasks;
 using System.ComponentModel;
 using System.IO;
 using System.Net;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using OneOf;
-
+using Remora.Discord.API.Objects;
 using static Trixy.Bot.Helpers.SocialTheme;
 
 namespace Trixy.Bot.Helpers
@@ -35,16 +35,35 @@ namespace Trixy.Bot.Helpers
 
             return result?.Url;
         }
-        
-        
 
-        private record RandomThemeApiResponse(string Url);
+        public static async Task<EmbedImage> GetTriggerAvatarAsEmbedImage(Uri avatarUrl)
+        {
+            var baseUrl = Environment.GetEnvironmentVariable("TRIGGER_API_BASE_URL_");
+            var uri = new Uri(baseUrl + avatarUrl);
+
+            if (baseUrl is null)
+                throw new ArgumentNullException(nameof(baseUrl));
+
+            var request = WebRequest.Create(uri);
+            request.Method = "GET";
+            request.Timeout = 5000;
+
+            var response = await request.GetResponseAsync();
+            var stream = response.GetResponseStream();
+            var reader = new StreamReader(stream);
+            var json = await reader.ReadToEndAsync();
+
+            return new EmbedImage(json);
+        }
+
+        private sealed record RandomThemeApiResponse(string Url);
     }
-
 }
 
 namespace System.Runtime.CompilerServices
 {
     [EditorBrowsable(EditorBrowsableState.Never)]
-    internal class IsExternalInit { }
+    internal class IsExternalInit
+    {
+    }
 }

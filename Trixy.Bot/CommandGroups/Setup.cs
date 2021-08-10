@@ -6,10 +6,12 @@ namespace Trixy.Bot.CommandGroups
     internal static class Setup
     {
         internal static IServiceCollection AddTrixyCommands(this IServiceCollection services)
-            => services
+        {
+            return services
                 .AddCommandGroup<MiscellaneousCommandGroup>()
                 .AddCommandGroup<SocialCommandGroup>()
                 .AddCommandGroup<ModerationCommandGroup>()
-            ;
+                .AddCommandGroup<GeneratorCommandGroup>();
+        }
     }
 }

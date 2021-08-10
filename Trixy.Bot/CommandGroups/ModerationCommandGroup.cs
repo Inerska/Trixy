@@ -7,6 +7,10 @@ namespace Trixy.Bot.CommandGroups
     public class ModerationCommandGroup
         : CommandGroup
     {
+        private readonly IDiscordRestWebhookAPI _discordRestWebhookApi;
+
+        private readonly InteractionContext _interactionContext;
+
         public ModerationCommandGroup(
             InteractionContext interactionContext,
             IDiscordRestWebhookAPI discordRestWebhookApi)
@@ -14,8 +18,5 @@ namespace Trixy.Bot.CommandGroups
             _interactionContext = interactionContext;
             _discordRestWebhookApi = discordRestWebhookApi;
         }
-
-        private readonly InteractionContext _interactionContext;
-        private readonly IDiscordRestWebhookAPI _discordRestWebhookApi;
     }
 }

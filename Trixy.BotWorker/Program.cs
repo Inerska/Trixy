@@ -1,7 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System;
 using Trixy.Bot;
 
 namespace Trixy.BotWorker
@@ -13,12 +12,14 @@ namespace Trixy.BotWorker
             CreateHostBuilder(args).Build().Run();
         }
 
-        private static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
+        private static IHostBuilder CreateHostBuilder(string[] args)
+        {
+            return Host.CreateDefaultBuilder(args)
                 .ConfigureServices((_, services) => services
                     .AddLogging(c => c.AddConsole())
                     .AddHostedService<Worker>()
                     .AddTrixyBot()
                     .BuildServiceProvider());
+        }
     }
 }
