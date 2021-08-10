@@ -7,8 +7,7 @@ namespace Trixy.Bot.CommandGroups
     internal static class Setup
     {
         internal static IServiceCollection AddTrixyCommands(
-            this IServiceCollection services,
-            IConfiguration configuration)
+            this IServiceCollection services)
         {
             return services
                 .AddCommandGroup<MiscellaneousCommandGroup>()

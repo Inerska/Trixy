@@ -34,7 +34,7 @@ namespace Trixy.Bot.CommandGroups
         {
             var userResult = await _discordRestUserApi.GetCurrentUserAsync();
             var avatarUrlResult = CDN.GetUserAvatarUrl(userResult.Entity);
-            var embed = await TemplateEmbed.GetAboutMeEmbed(avatarUrlResult.Entity.ToString(), userResult.Entity.ID);
+            var embed = TemplateEmbed.GetAboutMeEmbed(avatarUrlResult.Entity?.ToString(), userResult.Entity.ID);
 
             var result = await _discordRestWebhookApi.CreateFollowupMessageAsync
             (

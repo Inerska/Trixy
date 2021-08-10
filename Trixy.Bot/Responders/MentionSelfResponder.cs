@@ -31,7 +31,7 @@ namespace Trixy.Bot.Responders
         {
             var userResult = await _discordRestUserApi.GetCurrentUserAsync(ct);
             var avatarUrlResult = CDN.GetUserAvatarUrl(userResult.Entity);
-            var embed = await TemplateEmbed.GetAboutMeEmbed(avatarUrlResult.Entity.ToString(), userResult.Entity.ID);
+            var embed = TemplateEmbed.GetAboutMeEmbed(avatarUrlResult.Entity?.ToString(), userResult.Entity.ID);
 
             var botMention = userResult.Entity.ID.Mention();
 

@@ -20,7 +20,7 @@ namespace Trixy.Bot.Helpers
                 Footer: new EmbedFooter($"{category.Value} · {DateTime.Now.ToShortTimeString()}"));
         }
 
-        internal static async Task<Embed> GetAboutMeEmbed(string botAvatarUrl, Snowflake botId)
+        internal static Embed GetAboutMeEmbed(string? botAvatarUrl, Snowflake botId)
         {
             var builder = new StringBuilder();
             builder

@@ -1,28 +1,30 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Remora.Commands.Attributes;
 using Remora.Commands.Groups;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Commands.Contexts;
 using Remora.Results;
+using Trixy.Abstractions;
 
 namespace Trixy.Bot.CommandGroups
 {
     internal class ReportCommandGroup
         : CommandGroup
     {
-        private readonly IConfiguration _configuration;
+        private readonly IOptions<DiscordTextChannelsOptions> _options;
         private readonly IDiscordRestWebhookAPI _discordRestWebhookApi;
         private readonly InteractionContext _interactionContext;
 
         public ReportCommandGroup(
-            IConfiguration configuration,
             IDiscordRestWebhookAPI discordRestWebhookApi,
-            InteractionContext interactionContext)
+            InteractionContext interactionContext, 
+            IOptions<DiscordTextChannelsOptions> options)
         {
-            _configuration = configuration;
             _discordRestWebhookApi = discordRestWebhookApi;
             _interactionContext = interactionContext;
+            _options = options;
         }
 
         [Command("test")]
@@ -32,11 +34,10 @@ namespace Trixy.Bot.CommandGroups
             (
                 _interactionContext.ApplicationID,
                 _interactionContext.Token,
-                /*_configuration.Get<string>("TextChannels:ReportTextChannelId") 
-                ?? "Cannot find anything in your specified configuration path.",*/
+                _options.Value.ReportTextChannelId ?? "null",
                 ct: CancellationToken
             );
-
+            
             return result.IsSuccess
                 ? Result.FromSuccess()
                 : Result.FromError(result.Error);

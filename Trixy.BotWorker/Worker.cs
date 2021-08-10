@@ -12,7 +12,6 @@ namespace Trixy.BotWorker
     public sealed class Worker
         : BackgroundService
     {
-        private readonly IConfiguration _configuration;
         private readonly DiscordGatewayClient _discordGatewayClient;
         private readonly ILogger<Worker> _logger;
         private readonly SlashService _slashService;
@@ -20,13 +19,11 @@ namespace Trixy.BotWorker
         public Worker(
             ILogger<Worker> logger,
             DiscordGatewayClient discordGatewayClient,
-            SlashService slashService,
-            IConfiguration configuration)
+            SlashService slashService)
         {
             _logger = logger;
             _discordGatewayClient = discordGatewayClient;
             _slashService = slashService;
-            _configuration = configuration;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -37,7 +34,7 @@ namespace Trixy.BotWorker
                 _logger.LogWarning
                 (
                     "Cannot support slash commands :(",
-                    slashSupported.Error.Message
+                    slashSupported.Error?.Message
                 );
 
                 throw new Exception(slashSupported.Error?.Message, slashSupported.Error as Exception);
@@ -49,7 +46,7 @@ namespace Trixy.BotWorker
                 _logger.LogCritical
                 (
                     "Oops... something went wrong during the connection of the gateway client.",
-                    result.Error.Message
+                    result.Error?.Message
                 );
 
                 throw new Exception(result.Error?.Message, result.Error as Exception);
