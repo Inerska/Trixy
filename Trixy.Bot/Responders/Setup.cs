@@ -9,6 +9,7 @@ namespace Trixy.Bot.Responders
         internal static IServiceCollection AddTrixyResponders(this IServiceCollection services)
         {
             return services
+                .AddResponder<GuildAddResponder>(ResponderGroup.Early)
                 .AddResponder<ReadyResponder>(ResponderGroup.Early)
                 .AddResponder<MentionSelfResponder>();
         }
