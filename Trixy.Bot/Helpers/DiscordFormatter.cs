@@ -9,7 +9,7 @@ namespace Trixy.Bot.Helpers
             return $"<@!{snowflake.Value}>";
         }
 
-        internal static string SurroundWithAsterisks(string value)
+        internal static string SurroundWithAsterisks(string? value)
         {
             return $"**{value}**";
         }

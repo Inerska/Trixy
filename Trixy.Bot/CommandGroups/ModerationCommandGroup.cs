@@ -1,9 +1,12 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
+using System.Text;
 using System.Threading.Tasks;
 using Remora.Commands.Attributes;
 using Remora.Commands.Groups;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
+using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Conditions;
 using Remora.Discord.Commands.Contexts;
 using Remora.Results;
@@ -25,16 +28,20 @@ namespace Trixy.Bot.CommandGroups
 
         private readonly IDiscordRestUserAPI _discordRestUserApi;
 
+        private readonly IDiscordRestChannelAPI _discordRestChannelApi;
+
         public ModerationCommandGroup(
             InteractionContext interactionContext,
             IDiscordRestWebhookAPI discordRestWebhookApi,
             IDiscordRestGuildAPI discordRestGuildApi, 
-            IDiscordRestUserAPI discordRestUserApi)
+            IDiscordRestUserAPI discordRestUserApi, 
+            IDiscordRestChannelAPI discordRestChannelApi)
         {
             _interactionContext = interactionContext;
             _discordRestWebhookApi = discordRestWebhookApi;
             _discordRestGuildApi = discordRestGuildApi;
             _discordRestUserApi = discordRestUserApi;
+            _discordRestChannelApi = discordRestChannelApi;
         }
 
         [Command("ban")]
@@ -47,7 +54,7 @@ namespace Trixy.Bot.CommandGroups
             var message =
                 $"I have banned {SurroundWithAsterisks(target.Username)}, he/she/they won't bother us anymore for a looong time...";
 
-            await SendSingleMessageModerationEmbed(message);
+            await SendSingleMessageModerationEmbedAsync(target, message, reason);
 
             var result = await _discordRestGuildApi.CreateGuildBanAsync(_interactionContext.GuildID.Value, target.ID,
                 reason: reason ?? string.Empty);
@@ -67,7 +74,7 @@ namespace Trixy.Bot.CommandGroups
             var message =
                 $"I have kicked {SurroundWithAsterisks(target.Username)} out, hope to not seeing him/her/them for a long time...";
 
-            await SendSingleMessageModerationEmbed(message);
+            await SendSingleMessageModerationEmbedAsync(target, message, reason);
 
             var result = await _discordRestGuildApi.RemoveGuildMemberAsync(_interactionContext.GuildID.Value, target.ID,
                 reason ?? string.Empty);
@@ -76,10 +83,14 @@ namespace Trixy.Bot.CommandGroups
                 : Result.FromError(result.Error);
         }
 
-        private async Task SendSingleMessageModerationEmbed(string message)
+        private async Task SendSingleMessageModerationEmbedAsync(
+            IUser target,
+            string message,
+            string? reason = null)
         {
             var embed = TemplateEmbed.GetSingleMessageEmbed(message);
-            
+
+            await SendPrivateUserNotificationAsnyc(target, embed, reason);
             await MessageHelper.CreateFollowupMessageHelperAsync
             (
                 _discordRestWebhookApi,
@@ -88,7 +99,41 @@ namespace Trixy.Bot.CommandGroups
                 CancellationToken
             );
         }
-        
-        private async Task Send
+
+        private async Task<IResult> SendPrivateUserNotificationAsnyc(
+            IUser target,
+            Embed embed,
+            string? reason = null)
+        {
+            var privateUserChannel = await _discordRestUserApi.CreateDMAsync
+                (
+                    target.ID,
+                    CancellationToken
+                );
+
+            var guild = _discordRestGuildApi.GetGuildAsync(_interactionContext.GuildID.Value);
+            var guildName = guild.Result.Entity?.Name;
+            
+            var notificationMessageBuilder = new StringBuilder();
+            notificationMessageBuilder
+                .AppendLine($"You've been kicked / banned from {SurroundWithAsterisks(guildName)} !")
+                .AppendLine($"{SurroundWithAsterisks("Reason :")} {reason ?? "no reason"}")
+                .AppendLine("───\n")
+                .AppendLine("Use this time to repent yourself and comeback again if you can, otherwise, farewells.")
+                .AppendLine("— Trixy.");
+            
+            var result = await _discordRestChannelApi.CreateMessageAsync
+                (
+                    privateUserChannel.Entity!.ID,
+                    embeds: new []{ 
+                        embed with
+                    {
+                        Description = notificationMessageBuilder.ToString()
+                    }}
+                );
+            return result.IsSuccess
+                ? Result.FromSuccess()
+                : Result.FromError(result.Error);
+        }
     }
 }
