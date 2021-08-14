@@ -35,17 +35,13 @@ namespace Trixy.Bot.CommandGroups
 
             var embed = await TemplateEmbed.GetSocialEmbed(header, theme);
 
-            var result = await _discordRestWebhookApi.CreateFollowupMessageAsync
+            return await MessageHelper.CreateFollowupMessageHelperAsync
             (
-                _interactionContext.ApplicationID,
-                _interactionContext.Token,
-                embeds: new[] { embed },
-                ct: CancellationToken
+                _discordRestWebhookApi,
+                _interactionContext,
+                embed,
+                CancellationToken
             );
-
-            return result.IsSuccess
-                ? Result.FromSuccess()
-                : Result.FromError(result.Error);
         }
 
         #region CommandsGroups

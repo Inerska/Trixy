@@ -41,12 +41,12 @@ namespace Trixy.Bot.CommandGroups
         {
             var embed = TemplateEmbed.GetBanEmbed(target);
 
-            await _discordRestWebhookApi.CreateFollowupMessageAsync
+            await MessageHelper.CreateFollowupMessageHelperAsync
             (
-                _interactionContext.ApplicationID,
-                _interactionContext.Token,
-                embeds: new[] { embed },
-                ct: CancellationToken
+                _discordRestWebhookApi,
+                _interactionContext,
+                embed,
+                CancellationToken
             );
 
             var result = await _discordRestGuildApi.CreateGuildBanAsync(_interactionContext.GuildID.Value, target.ID,
