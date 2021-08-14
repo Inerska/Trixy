@@ -9,7 +9,7 @@ using Trixy.Bot.Helpers;
 
 namespace Trixy.Bot.Responders
 {
-    public class MentionSelfResponder
+    internal class MentionSelfResponder
         : IResponder<IMessageCreate>
     {
         private readonly IDiscordRestChannelAPI _discordRestChannelApi;

@@ -13,7 +13,7 @@ using Remora.Results;
 
 namespace Trixy.Bot.Responders
 {
-    public class ReadyResponder
+    internal class ReadyResponder
         : IResponder<IReady>, IResponder<IGuildCreate>
     {
         private readonly DiscordGatewayClient _gatewayClient;
