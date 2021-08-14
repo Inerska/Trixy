@@ -28,7 +28,7 @@ namespace Trixy.Bot.CommandGroups
 
         [Command("avatar")]
         [Description("Posts your avatar, or the user's avatar.")]
-        public async Task<IResult> AvatarGeneratorCommandAsync(
+        public async Task<IResult> GeneratorAvatarCommandAsync(
             [Description("(Mandatory) The user to get the avatar from.")]
             IUser? target = null)
         {

@@ -13,14 +13,14 @@ namespace Trixy.Bot.Helpers
             IDiscordRestWebhookAPI discordRestWebhookApi,
             InteractionContext interactionContext,
             Embed embed,
-            CancellationToken ct)
+            CancellationToken cancellationToken)
         {
             var result = await discordRestWebhookApi.CreateFollowupMessageAsync
             (
                 interactionContext.ApplicationID,
                 interactionContext.Token,
                 embeds: new[] { embed },
-                ct: ct
+                ct: cancellationToken
             );
             return result.IsSuccess
                 ? Result.FromSuccess()

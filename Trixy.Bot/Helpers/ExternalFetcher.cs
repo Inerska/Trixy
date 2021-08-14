@@ -11,7 +11,9 @@ namespace Trixy.Bot.Helpers
 {
     internal static class ExternalFetcher
     {
-        public static async Task<string?> GetRandomThemeGif(OneOf<SafeForWork, NotSafeForWork> category)
+        public static async Task<string?> GetRandomThemeGif(
+                OneOf<SafeForWork, 
+                NotSafeForWork> category)
         {
             var baseUrl = category.IsT0
                 ? Environment.GetEnvironmentVariable("SFW_ANIME_API_BASE_URL_")

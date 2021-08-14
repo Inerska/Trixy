@@ -43,10 +43,10 @@ namespace Trixy.Bot.Helpers
             );
         }
 
-        internal static Embed GetBanEmbed(IUser target)
+        internal static Embed GetSingleMessageEmbed(string message)
         {
             var embed = new Embed(
-                Description: $"I have banned {DiscordFormatter.SurroundWithAsterisks(target.Username)}, he/she/they won't bother us anymore for a looong time...",
+                Description: message,
                 Colour: Colors.Embed.ModerationColor);
 
             return embed;

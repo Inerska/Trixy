@@ -10,7 +10,7 @@ using Trixy.Bot.Helpers;
 
 namespace Trixy.Bot.CommandGroups
 {
-    public class MiscellaneousCommandGroup
+    internal class MiscellaneousCommandGroup
         : CommandGroup
     {
         private readonly IDiscordRestUserAPI _discordRestUserApi;
@@ -29,7 +29,7 @@ namespace Trixy.Bot.CommandGroups
 
         [Command("info", "about", "bot", "trixy")]
         [Description("Get some information about me.")]
-        public async Task<IResult> AboutMeCommandAsync()
+        public async Task<IResult> MiscellaneousAboutCommandAsync()
         {
             var userResult = await _discordRestUserApi.GetCurrentUserAsync();
             var avatarUrlResult = CDN.GetUserAvatarUrl(userResult.Entity!);
