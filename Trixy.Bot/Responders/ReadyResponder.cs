@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Remora.Discord.API.Abstractions.Gateway.Events;
@@ -6,9 +7,11 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Gateway.Commands;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Services;
+using Remora.Discord.Core;
 using Remora.Discord.Gateway;
 using Remora.Discord.Gateway.Responders;
 using Remora.Discord.Gateway.Services;
+using Remora.Discord.Rest.API;
 using Remora.Results;
 
 namespace Trixy.Bot.Responders
@@ -33,6 +36,7 @@ namespace Trixy.Bot.Responders
         public async Task<Result> RespondAsync(IGuildCreate gatewayEvent, CancellationToken ct = default)
         {
             _logger.LogInformation("Setting up slash-commands");
+            
             var result = await _slashService.UpdateSlashCommandsAsync(gatewayEvent.ID, ct);
             return result.IsSuccess
                 ? Result.FromSuccess()
