@@ -13,7 +13,7 @@ namespace Trixy.Bot.CommandGroups
                 .AddCommandGroup<MiscellaneousCommandGroup>()
                 .AddCommandGroup<SocialCommandGroup>()
                 .AddCommandGroup<ModerationCommandGroup>()
-                .AddCommandGroup<ReportCommandGroup>()
+                .AddCommandGroup<TicketCommandGroup>()
                 .AddCommandGroup<GeneratorCommandGroup>();
         }
     }

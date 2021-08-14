@@ -1,23 +1,26 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Remora.Commands.Attributes;
 using Remora.Commands.Groups;
+using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
+using Remora.Discord.Commands.Conditions;
 using Remora.Discord.Commands.Contexts;
 using Remora.Results;
 using Trixy.Abstractions;
 
 namespace Trixy.Bot.CommandGroups
 {
-    internal class ReportCommandGroup
+    internal class TicketCommandGroup
         : CommandGroup
     {
         private readonly IOptions<DiscordTextChannelsOptions> _options;
         private readonly IDiscordRestWebhookAPI _discordRestWebhookApi;
         private readonly InteractionContext _interactionContext;
 
-        public ReportCommandGroup(
+        public TicketCommandGroup(
             IDiscordRestWebhookAPI discordRestWebhookApi,
             InteractionContext interactionContext, 
             IOptions<DiscordTextChannelsOptions> options)
@@ -27,20 +30,11 @@ namespace Trixy.Bot.CommandGroups
             _options = options;
         }
 
-        [Command("test")]
-        public async Task<IResult> TestCommand()
+        [Command("create-ticket")]
+        [RequireUserGuildPermission(DiscordPermission.ManageChannels)]
+        public async Task<IResult> CreateTicketCommandAsync()
         {
-            var result = await _discordRestWebhookApi.CreateFollowupMessageAsync
-            (
-                _interactionContext.ApplicationID,
-                _interactionContext.Token,
-                _options.Value.ReportTextChannelId ?? "null",
-                ct: CancellationToken
-            );
-            
-            return result.IsSuccess
-                ? Result.FromSuccess()
-                : Result.FromError(result.Error);
+            throw new NotImplementedException();
         }
     }
 }
