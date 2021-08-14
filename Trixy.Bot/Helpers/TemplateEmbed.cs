@@ -2,6 +2,7 @@
 using System.Text;
 using System.Threading.Tasks;
 using OneOf;
+using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Core;
 using Trixy.Common;
@@ -40,6 +41,15 @@ namespace Trixy.Bot.Helpers
                 Thumbnail: new EmbedThumbnail(botAvatarUrl),
                 Colour: Colors.Embed.TransparentColor
             );
+        }
+
+        internal static Embed GetBanEmbed(IUser target)
+        {
+            var embed = new Embed(
+                Description: $"I have banned {DiscordFormatter.SurroundWithAsterisks(target.Username)}, he/she/they won't bother us anymore for a looong time...",
+                Colour: Colors.Embed.ModerationColor);
+
+            return embed;
         }
     }
 }
