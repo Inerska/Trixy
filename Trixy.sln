@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trixy.Bot.Test", "Trixy.Bot
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trixy.Abstractions", "Trixy.Abstractions\Trixy.Abstractions.csproj", "{6E5E0313-F110-4CCC-9F55-21DF634D0923}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trixy.DataAccess", "Trixy.DataAccess\Trixy.DataAccess.csproj", "{B0A5B801-FC98-4BA3-A876-C110466113F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trixy.DataAccess.Migrations", "Trixy.DataAccess.Migrations\Trixy.DataAccess.Migrations.csproj", "{E96D8A38-52ED-4924-B63A-365CB4251849}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{6E5E0313-F110-4CCC-9F55-21DF634D0923}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E5E0313-F110-4CCC-9F55-21DF634D0923}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E5E0313-F110-4CCC-9F55-21DF634D0923}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0A5B801-FC98-4BA3-A876-C110466113F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0A5B801-FC98-4BA3-A876-C110466113F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0A5B801-FC98-4BA3-A876-C110466113F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0A5B801-FC98-4BA3-A876-C110466113F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E96D8A38-52ED-4924-B63A-365CB4251849}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E96D8A38-52ED-4924-B63A-365CB4251849}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E96D8A38-52ED-4924-B63A-365CB4251849}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E96D8A38-52ED-4924-B63A-365CB4251849}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
