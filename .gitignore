@@ -23,3 +23,9 @@ Trixy.Common/obj
 
 Trixy.Abstractions/bin
 Trixy.Abstractions/obj
+
+Trixy.DataAccess/bin
+Trixy.DataAccess/obj
+
+Trixy.DataAccess.Migrations/bin
+Trixy.DataAccess.Migrations/obj
