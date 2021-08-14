@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Remora.Commands.Attributes;
 using Remora.Commands.Groups;
@@ -16,13 +15,13 @@ namespace Trixy.Bot.CommandGroups
     internal class TicketCommandGroup
         : CommandGroup
     {
-        private readonly IOptions<DiscordTextChannelsOptions> _options;
         private readonly IDiscordRestWebhookAPI _discordRestWebhookApi;
         private readonly InteractionContext _interactionContext;
+        private readonly IOptions<DiscordTextChannelsOptions> _options;
 
         public TicketCommandGroup(
             IDiscordRestWebhookAPI discordRestWebhookApi,
-            InteractionContext interactionContext, 
+            InteractionContext interactionContext,
             IOptions<DiscordTextChannelsOptions> options)
         {
             _discordRestWebhookApi = discordRestWebhookApi;

@@ -29,15 +29,16 @@ namespace Trixy.Bot.CommandGroups
         [Command("avatar")]
         [Description("Posts your avatar, or the user's avatar.")]
         public async Task<IResult> AvatarGeneratorCommandAsync(
-            [Description("(Mandatory) The user to get the avatar from.")] IUser? target = null)
+            [Description("(Mandatory) The user to get the avatar from.")]
+            IUser? target = null)
         {
-            var userResultAvatarUrl = target is null 
+            var userResultAvatarUrl = target is null
                 ? CDN.GetUserAvatarUrl(_interactionContext.User)
                 : CDN.GetUserAvatarUrl(target);
 
             var formattedMessage = target is null
                 ? $"{_interactionContext.User.ID.Mention()} | Here's your marvelous avatar...\n{userResultAvatarUrl.Entity?.AbsoluteUri}"
-                : $"{_interactionContext.User.ID.Mention()} | Here's the beautiful avatar of {DiscordFormatter.SurroundWithAsterisks(target.Username)}...\n{userResultAvatarUrl.Entity?.AbsoluteUri}"; 
+                : $"{_interactionContext.User.ID.Mention()} | Here's the beautiful avatar of {DiscordFormatter.SurroundWithAsterisks(target.Username)}...\n{userResultAvatarUrl.Entity?.AbsoluteUri}";
 
             var result = await _discordRestWebhookApi.CreateFollowupMessageAsync
             (

@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Gateway.Extensions;
