@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Remora.Commands.Attributes;
 using Remora.Commands.Groups;
+using Remora.Discord.API;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
@@ -54,7 +55,7 @@ namespace Trixy.Bot.CommandGroups
             var message =
                 $"I have banned {SurroundWithAsterisks(target.Username)}, he/she/they won't bother us anymore for a looong time...";
 
-            await SendSingleMessageModerationEmbedAsync(target, message, reason);
+            await SendSingleMessageModerationEmbedAsync(message, reason, true, target);
 
             var result = await _discordRestGuildApi.CreateGuildBanAsync(_interactionContext.GuildID.Value, target.ID,
                 reason: reason ?? string.Empty);
@@ -74,7 +75,7 @@ namespace Trixy.Bot.CommandGroups
             var message =
                 $"I have kicked {SurroundWithAsterisks(target.Username)} out, hope to not seeing him/her/them for a long time...";
 
-            await SendSingleMessageModerationEmbedAsync(target, message, reason);
+            await SendSingleMessageModerationEmbedAsync(message, reason, true, target);
 
             var result = await _discordRestGuildApi.RemoveGuildMemberAsync(_interactionContext.GuildID.Value, target.ID,
                 reason ?? string.Empty);
@@ -83,14 +84,25 @@ namespace Trixy.Bot.CommandGroups
                 : Result.FromError(result.Error);
         }
 
+        [Command("say")]
+        [RequireUserGuildPermission(DiscordPermission.PrioritySpeaker)]
+        [Description("Make the bot speaks whatever you want.")]
+        public async Task<IResult> ModerationSayCommandAsync([Description("The message that the bot will say.")] string message)
+        {
+            await SendSingleMessageModerationEmbedAsync(message);
+
+            return Result.FromSuccess();
+        }
+
         private async Task SendSingleMessageModerationEmbedAsync(
-            IUser target,
             string message,
-            string? reason = null)
+            string? reason = null,
+            bool hasPrivateNotification = false,
+            IUser? target = null)
         {
             var embed = TemplateEmbed.GetSingleMessageEmbed(message);
 
-            await SendPrivateUserNotificationAsnyc(target, embed, reason);
+            if (hasPrivateNotification) await SendPrivateUserNotificationAsnyc(target!, embed, reason);
             await MessageHelper.CreateFollowupMessageHelperAsync
             (
                 _discordRestWebhookApi,
