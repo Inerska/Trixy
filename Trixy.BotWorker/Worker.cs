@@ -32,8 +32,7 @@ namespace Trixy.BotWorker
             {
                 _logger.LogWarning
                 (
-                    "Cannot support slash commands :(",
-                    slashSupported.Error?.Message
+                    "Cannot support slash commands :("
                 );
 
                 throw new Exception(slashSupported.Error?.Message, slashSupported.Error as Exception);
@@ -44,8 +43,7 @@ namespace Trixy.BotWorker
             {
                 _logger.LogCritical
                 (
-                    "Oops... something went wrong during the connection of the gateway client.",
-                    result.Error?.Message
+                    "Oops... something went wrong during the connection of the gateway client."
                 );
 
                 throw new Exception(result.Error?.Message, result.Error as Exception);
