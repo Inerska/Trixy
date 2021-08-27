@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Trixy.DataAccess.Models
 {
-    public sealed record User(
+    public sealed record UserEntity(
         [Required] int Id,
         [Required] ulong Snowflake,
         [Required] ulong Experience,
