@@ -30,7 +30,7 @@ namespace Trixy.Bot.Helpers
                 .AppendLine(
                     "I dont have any prefix as my peers, you can access my commands with `/`, cool right ?\n")
                 .AppendLine(
-                    "I'm open-source, you can contribute to my development and raise an issue (even a typo) in my [gitHub repository](https://github.com/Inerska/Trixy)")
+                    "I'm open-source, you can contribute to my development and raise an issue (even a typo) in my [GitHub repository](https://github.com/Inerska/Trixy)")
                 .AppendLine(
                     "If you want to add me in your own server, you can just [click here](https://discord.com/api/oauth2/authorize?client_id=870605243891744859&permissions=8&scope=applications.commands%20bot)\n\n")
                 .AppendLine("See you soon :)");

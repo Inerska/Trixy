@@ -22,13 +22,9 @@ namespace Trixy.Bot.CommandGroups
         : CommandGroup
     {
         private readonly IDiscordRestWebhookAPI _discordRestWebhookApi;
-
         private readonly InteractionContext _interactionContext;
-
         private readonly IDiscordRestGuildAPI _discordRestGuildApi;
-
         private readonly IDiscordRestUserAPI _discordRestUserApi;
-
         private readonly IDiscordRestChannelAPI _discordRestChannelApi;
 
         public ModerationCommandGroup(
