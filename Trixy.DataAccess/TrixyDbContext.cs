@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Trixy.DataAccess.Models;
 
@@ -13,11 +14,13 @@ namespace Trixy.DataAccess
         {
             base.OnConfiguring(optionsBuilder);
 
-            var connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING_");
+            /*var connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING_");
             if (connectionString is null)
-                throw new ArgumentNullException(nameof(connectionString));
+                throw new ArgumentNullException(nameof(connectionString));*/ 
 
-            optionsBuilder.UseSqlite(connectionString);
+            var connectionString = 
+                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "trixy.db");
+            optionsBuilder.UseSqlite($"Data Source={connectionString};");
         }
     }
 }

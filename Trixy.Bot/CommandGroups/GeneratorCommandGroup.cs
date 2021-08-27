@@ -36,7 +36,7 @@ namespace Trixy.Bot.CommandGroups
                 ? CDN.GetUserAvatarUrl(_interactionContext.User)
                 : CDN.GetUserAvatarUrl(target);
 
-            var formattedMessage = target is null
+            var formattedMessage = target is null   
                 ? $"{_interactionContext.User.ID.Mention()} | Here's your marvelous avatar...\n{userResultAvatarUrl.Entity?.AbsoluteUri}"
                 : $"{_interactionContext.User.ID.Mention()} | Here's the beautiful avatar of {DiscordFormatter.SurroundWithAsterisks(target.Username)}...\n{userResultAvatarUrl.Entity?.AbsoluteUri}";
 
