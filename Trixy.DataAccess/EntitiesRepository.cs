@@ -1,6 +1,6 @@
 ﻿namespace Trixy.DataAccess
 {
-    public interface IEntitiesRepository<T>
+    public interface IEntitiesRepository<in T>
     {
         void AddEntityAsync(T entity);
         void RemoveEntityAsync(T entity);
