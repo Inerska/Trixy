@@ -1,6 +1,8 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Data;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Remora.Discord.Core;
 using Trixy.DataAccess.Models;
@@ -40,6 +42,15 @@ namespace Trixy.DataAccess.Users
         public bool ExistsBySnowflake(Snowflake snowflake)
         {
             return _context.Users.Any(entity => entity.Snowflake == snowflake.Value);
+        }
+
+        public async Task<UserEntity> GetEntityBySnowflakeAsync(Snowflake snowflake)
+        {
+            var exists = ExistsBySnowflake(snowflake: snowflake);
+            if (!exists)
+                throw new ArgumentNullException(nameof(snowflake));
+
+            return await _context.Users.SingleAsync(entity => entity.Snowflake == snowflake.Value);
         }
     }
 }
