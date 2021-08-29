@@ -32,9 +32,7 @@ namespace Trixy.Bot.CommandGroups
             [Description("(Mandatory) The user to get the avatar from.")]
             IUser? target = null)
         {
-            var userResultAvatarUrl = target is null
-                ? CDN.GetUserAvatarUrl(_interactionContext.User)
-                : CDN.GetUserAvatarUrl(target);
+            var userResultAvatarUrl = CDN.GetUserAvatarUrl(target ?? _interactionContext.User);
 
             var formattedMessage = target is null   
                 ? $"{_interactionContext.User.ID.Mention()} | Here's your marvelous avatar...\n{userResultAvatarUrl.Entity?.AbsoluteUri}"
