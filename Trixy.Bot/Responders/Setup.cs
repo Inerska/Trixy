@@ -12,6 +12,7 @@ namespace Trixy.Bot.Responders
                 //.AddResponder<GuildAddResponder>(ResponderGroup.Early)
                 .AddResponder<ReadyResponder>(ResponderGroup.Early)
                 .AddResponder<FirstMessageRegistrationResponder>()
+                .AddResponder<ExperienceMessageResponder>()
                 .AddResponder<MentionSelfResponder>();
         }
     }
