@@ -1,18 +1,32 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
+using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Gateway.Events;
 using Remora.Discord.Gateway.Responders;
 using Remora.Results;
 
+using Trixy.DataAccess;
+using Trixy.DataAccess.Models;
+using Trixy.DataAccess.Users;
+
 namespace Trixy.Bot.Responders
 {
     public class FirstMessageRegistrationResponder
-        : IResponder<MessageCreate>
+        : IResponder<IMessageCreate>
     {
-        public Task<Result> RespondAsync(MessageCreate gatewayEvent, CancellationToken ct = new CancellationToken())
+        public Task<Result> RespondAsync(IMessageCreate gatewayEvent, CancellationToken ct = new CancellationToken())
         {
-            throw new NotImplementedException();
+            using var context = new TrixyDbContext();
+            var service = new UsersRepositoryService(context);
+            var user = gatewayEvent.Author;
+
+            if (!service.ExistsBySnowflake(user.ID))
+            {
+                var entity = new UserEntity(user.ID);
+                service.AddEntityAsync(entity);
+            }
+
+            return Task.FromResult(Result.FromSuccess());
         }
     }
 }
