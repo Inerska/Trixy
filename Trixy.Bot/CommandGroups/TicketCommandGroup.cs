@@ -30,7 +30,7 @@ namespace Trixy.Bot.CommandGroups
         }
 
         [Command("create-ticket")]
-        [RequireUserGuildPermission(DiscordPermission.ManageChannels)]
+        [RequireDiscordPermission(DiscordPermission.ManageChannels)]
         public async Task<IResult> CreateTicketCommandAsync()
         {
             throw new NotImplementedException();

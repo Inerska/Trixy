@@ -17,11 +17,11 @@ using static Trixy.Bot.Helpers.DiscordFormatter;
 
 namespace Trixy.Bot.CommandGroups
 {
-    //TODO: Logging every moderation commands invok.
+    //TODO: Logging every moderation commands invoke.
     internal class ModerationCommandGroup
         : CommandGroup
     {
-        private readonly IDiscordRestWebhookAPI _discordRestWebhookApi;
+        private readonly IDiscordRestInteractionAPI _discordRestInteractionApi;
         private readonly InteractionContext _interactionContext;
         private readonly IDiscordRestGuildAPI _discordRestGuildApi;
         private readonly IDiscordRestUserAPI _discordRestUserApi;
@@ -29,20 +29,20 @@ namespace Trixy.Bot.CommandGroups
 
         public ModerationCommandGroup(
             InteractionContext interactionContext,
-            IDiscordRestWebhookAPI discordRestWebhookApi,
+            IDiscordRestInteractionAPI discordRestInteractionApi,
             IDiscordRestGuildAPI discordRestGuildApi, 
             IDiscordRestUserAPI discordRestUserApi, 
             IDiscordRestChannelAPI discordRestChannelApi)
         {
             _interactionContext = interactionContext;
-            _discordRestWebhookApi = discordRestWebhookApi;
+            _discordRestInteractionApi = discordRestInteractionApi;
             _discordRestGuildApi = discordRestGuildApi;
             _discordRestUserApi = discordRestUserApi;
             _discordRestChannelApi = discordRestChannelApi;
         }
 
         [Command("ban")]
-        [RequireUserGuildPermission(DiscordPermission.BanMembers)]
+        [RequireDiscordPermission(DiscordPermission.BanMembers)]
         [Description("Ban the target from your discord server.")]
         public async Task<IResult> ModerationBanCommandAsync(
             [Description("The user to ban.")] IUser target,
@@ -62,7 +62,7 @@ namespace Trixy.Bot.CommandGroups
         }
 
         [Command("kick")]
-        [RequireUserGuildPermission(DiscordPermission.KickMembers)]
+        [RequireDiscordPermission(DiscordPermission.KickMembers)]
         [Description("Kick the target out of your discord server.")]
         public async Task<IResult> ModerationKickCommandAsync(
             [Description("The user to kick.")] IUser target,
@@ -81,7 +81,7 @@ namespace Trixy.Bot.CommandGroups
         }
 
         [Command("say")]
-        [RequireUserGuildPermission(DiscordPermission.PrioritySpeaker)]
+        [RequireDiscordPermission(DiscordPermission.PrioritySpeaker)]
         [Description("Make the bot speaks whatever you want.")]
         public async Task<IResult> ModerationSayCommandAsync([Description("The message that the bot will say.")] string message)
         {
@@ -98,17 +98,17 @@ namespace Trixy.Bot.CommandGroups
         {
             var embed = TemplateEmbed.GetSingleMessageEmbed(message);
 
-            if (hasPrivateNotification) await SendPrivateUserNotificationAsnyc(target!, embed, reason);
-            await MessageHelper.CreateFollowupMessageHelperAsync
+            if (hasPrivateNotification) await SendPrivateUserNotificationAsync(target!, embed, reason);
+            await MessageHelper.CreateFollowupEmbedMessageHelperAsync
             (
-                _discordRestWebhookApi,
+                _discordRestInteractionApi,
                 _interactionContext,
                 embed,
                 CancellationToken
             );
         }
 
-        private async Task<IResult> SendPrivateUserNotificationAsnyc(
+        private async Task<IResult> SendPrivateUserNotificationAsync(
             IUser target,
             Embed embed,
             string? reason = null)
