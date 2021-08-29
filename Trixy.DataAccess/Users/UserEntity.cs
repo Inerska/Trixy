@@ -15,8 +15,8 @@ namespace Trixy.DataAccess.Models
         
         public int Id { get; set; } 
         public ulong Snowflake { get; set; }
-        public ulong Experience { get; set; }
-        public uint Level { get; set; }
+        public int Experience { get; set; }
+        public int Level { get; set; }
     }
 }
 

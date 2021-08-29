@@ -19,6 +19,38 @@ namespace Trixy.DataAccess.Users
             _context = context;
         }
 
+        public async void EarnExperience(
+            UserEntity entity,
+            int amount)
+        {
+            var entityDatabase = await GetEntityBySnowflakeAsync(new Snowflake(entity.Snowflake));
+            var requiredExperience = await GetRequiredExperienceAsync(entityDatabase);
+            var canLevelUp = entityDatabase.Experience + amount >= requiredExperience;
+
+            if (canLevelUp)
+                LevelUp(entityDatabase);
+            else
+                entityDatabase.Experience += amount;
+            
+            await _context.SaveChangesAsync();
+        }
+
+        private async void LevelUp(UserEntity entity)
+        {
+            var entityDatabase = await GetEntityBySnowflakeAsync(new Snowflake(entity.Snowflake));
+            entityDatabase.Experience = 0;
+            entityDatabase.Level ++;
+
+            await _context.SaveChangesAsync();
+        }
+
+        private async Task<int> GetRequiredExperienceAsync(UserEntity entity)
+        {
+            var entityDatabase = await GetEntityBySnowflakeAsync(new Snowflake(entity.Snowflake));
+
+            return (int) Math.Exp(entityDatabase.Level + 3) * 4 + 2;
+        } 
+
         public async void AddEntityAsync(UserEntity entity)
         {
             var contains = await _context.Users.ContainsAsync(entity);

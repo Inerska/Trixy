@@ -21,10 +21,10 @@ namespace Trixy.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<ulong>("Experience")
+                    b.Property<int>("Experience")
                         .HasColumnType("INTEGER");
 
-                    b.Property<uint>("Level")
+                    b.Property<int>("Level")
                         .HasColumnType("INTEGER");
 
                     b.Property<ulong>("Snowflake")
