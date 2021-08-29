@@ -1,13 +1,23 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using Remora.Discord.Core;
 
 namespace Trixy.DataAccess.Models
 {
-    public sealed record UserEntity(
-        [Required] int Id,
-        [Required] ulong Snowflake,
-        [Required] ulong Experience,
-        [Required] uint Level);
+    public sealed class UserEntity
+    {
+        public UserEntity(Snowflake snowflake)
+            => Snowflake = snowflake.Value;
+        
+        public UserEntity(ulong snowflake)
+            => Snowflake = snowflake;
+        
+        
+        public int Id { get; set; } 
+        public ulong Snowflake { get; set; }
+        public ulong Experience { get; set; }
+        public uint Level { get; set; }
+    }
 }
 
 
