@@ -1,4 +1,5 @@
 ﻿using System;
+using Remora.Discord.Core;
 
 namespace Trixy.DataAccess
 {
@@ -6,5 +7,6 @@ namespace Trixy.DataAccess
     {
         void AddEntityAsync(T entity);
         void RemoveEntityAsync(T entity);
+        bool ExistsBySnowflake(Snowflake snowflake);
     }
 }
