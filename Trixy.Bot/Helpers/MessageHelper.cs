@@ -9,18 +9,35 @@ namespace Trixy.Bot.Helpers
 {
     internal static class MessageHelper
     {
-        internal static async Task<IResult> CreateFollowupMessageHelperAsync(
-            IDiscordRestWebhookAPI discordRestWebhookApi,
+        internal static async Task<IResult> CreateFollowupEmbedMessageHelperAsync(
+            IDiscordRestInteractionAPI discordRestInteractionApi,
             InteractionContext interactionContext,
             Embed embed,
-            CancellationToken cancellationToken)
+            CancellationToken ct)
         {
-            var result = await discordRestWebhookApi.CreateFollowupMessageAsync
+            var result = await discordRestInteractionApi.CreateFollowupMessageAsync
             (
                 interactionContext.ApplicationID,
                 interactionContext.Token,
                 embeds: new[] { embed },
-                ct: cancellationToken
+                ct: ct
+            );
+            return result.IsSuccess
+                ? Result.FromSuccess()
+                : Result.FromError(result.Error);
+        }
+        internal static async Task<IResult> CreateFollowupMessageHelperAsync(
+            IDiscordRestInteractionAPI discordRestInteractionApi,
+            InteractionContext interactionContext,
+            string content,
+            CancellationToken ct)
+        {
+            var result = await discordRestInteractionApi.CreateFollowupMessageAsync
+            (
+                interactionContext.ApplicationID,
+                interactionContext.Token,
+                content,
+                ct: ct
             );
             return result.IsSuccess
                 ? Result.FromSuccess()

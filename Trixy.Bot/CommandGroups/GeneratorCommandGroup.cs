@@ -14,16 +14,15 @@ namespace Trixy.Bot.CommandGroups
     internal class GeneratorCommandGroup
         : CommandGroup
     {
-        private readonly IDiscordRestWebhookAPI _discordRestWebhookApi;
-
+        private readonly IDiscordRestInteractionAPI _discordRestInteractionApi;
         private readonly InteractionContext _interactionContext;
 
         public GeneratorCommandGroup(
             InteractionContext interactionContext,
-            IDiscordRestWebhookAPI discordRestWebhookApi)
+            IDiscordRestInteractionAPI discordRestInteractionApi)
         {
             _interactionContext = interactionContext;
-            _discordRestWebhookApi = discordRestWebhookApi;
+            _discordRestInteractionApi = discordRestInteractionApi;
         }
 
         [Command("avatar")]
@@ -38,12 +37,12 @@ namespace Trixy.Bot.CommandGroups
                 ? $"{_interactionContext.User.ID.Mention()} | Here's your marvelous avatar...\n{userResultAvatarUrl.Entity?.AbsoluteUri}"
                 : $"{_interactionContext.User.ID.Mention()} | Here's the beautiful avatar of {DiscordFormatter.SurroundWithAsterisks(target.Username)}...\n{userResultAvatarUrl.Entity?.AbsoluteUri}";
 
-            var result = await _discordRestWebhookApi.CreateFollowupMessageAsync
+            var result = await MessageHelper.CreateFollowupMessageHelperAsync
             (
-                _interactionContext.ApplicationID,
-                _interactionContext.Token,
+                _discordRestInteractionApi,
+                _interactionContext,
                 formattedMessage,
-                ct: CancellationToken
+                CancellationToken
             );
             return result.IsSuccess
                 ? Result.FromSuccess()

@@ -16,14 +16,14 @@ namespace Trixy.Bot.CommandGroups
     internal class SocialCommandGroup
         : CommandGroup
     {
-        private readonly IDiscordRestWebhookAPI _discordRestWebhookApi;
+        private readonly IDiscordRestInteractionAPI _discordRestInteractionApi;
         private readonly InteractionContext _interactionContext;
 
         public SocialCommandGroup(
-            IDiscordRestWebhookAPI discordRestWebhookApi,
+            IDiscordRestInteractionAPI discordRestInteractionApi,
             InteractionContext interactionContext)
         {
-            _discordRestWebhookApi = discordRestWebhookApi;
+            _discordRestInteractionApi = discordRestInteractionApi;
             _interactionContext = interactionContext;
         }
 
@@ -37,9 +37,9 @@ namespace Trixy.Bot.CommandGroups
 
             var embed = await TemplateEmbed.GetSocialEmbed(header, theme);
 
-            return await MessageHelper.CreateFollowupMessageHelperAsync
+            return await MessageHelper.CreateFollowupEmbedMessageHelperAsync
             (
-                _discordRestWebhookApi,
+                _discordRestInteractionApi,
                 _interactionContext,
                 embed,
                 CancellationToken

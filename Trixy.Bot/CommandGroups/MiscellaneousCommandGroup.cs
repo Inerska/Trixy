@@ -14,15 +14,15 @@ namespace Trixy.Bot.CommandGroups
         : CommandGroup
     {
         private readonly IDiscordRestUserAPI _discordRestUserApi;
-        private readonly IDiscordRestWebhookAPI _discordRestWebhookApi;
+        private readonly IDiscordRestInteractionAPI _discordRestInteractionApi;
         private readonly InteractionContext _interactionContext;
 
         public MiscellaneousCommandGroup(
-            IDiscordRestWebhookAPI discordRestWebhookApi,
+            IDiscordRestInteractionAPI discordRestInteractionApi,
             InteractionContext interactionContext,
             IDiscordRestUserAPI discordRestUserApi)
         {
-            _discordRestWebhookApi = discordRestWebhookApi;
+            _discordRestInteractionApi = discordRestInteractionApi;
             _interactionContext = interactionContext;
             _discordRestUserApi = discordRestUserApi;
         }
@@ -35,12 +35,12 @@ namespace Trixy.Bot.CommandGroups
             var avatarUrlResult = CDN.GetUserAvatarUrl(userResult.Entity!);
             var embed = TemplateEmbed.GetAboutMeEmbed(avatarUrlResult.Entity?.ToString(), userResult.Entity!.ID);
 
-            var result = await _discordRestWebhookApi.CreateFollowupMessageAsync
+            var result = await MessageHelper.CreateFollowupEmbedMessageHelperAsync
             (
-                _interactionContext.ApplicationID,
-                _interactionContext.Token,
-                embeds: new[] { embed },
-                ct: CancellationToken
+                _discordRestInteractionApi,
+                _interactionContext,
+                embed,
+                CancellationToken
             );
             return result.IsSuccess
                 ? Result.FromSuccess()
