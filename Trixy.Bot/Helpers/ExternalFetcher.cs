@@ -22,7 +22,7 @@ namespace Trixy.Bot.Helpers
             if (baseUrl is null)
                 throw new ArgumentNullException(nameof(baseUrl));
 
-            Uri url = new(baseUrl + category.Value.ToString()?.ToLower());
+            var url = new Uri(baseUrl + category.Value.ToString()?.ToLower());
             var request = WebRequest.Create(url);
             request.Method = "GET";
             request.ContentType = "application/json";
