@@ -1,6 +1,8 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Remora.Discord.Core;
+using Trixy.DataAccess.Guilds;
 
 namespace Trixy.DataAccess.Models
 {
@@ -17,6 +19,7 @@ namespace Trixy.DataAccess.Models
         public ulong Snowflake { get; set; }
         public int Experience { get; set; }
         public int Level { get; set; }
+        public List<GuildEntity> Guilds { get; set; }
     }
 }
 
