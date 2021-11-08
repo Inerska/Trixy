@@ -1,12 +1,12 @@
-﻿using System.ComponentModel;
-using System.Threading.Tasks;
-using Remora.Commands.Attributes;
+﻿using Remora.Commands.Attributes;
 using Remora.Commands.Groups;
 using Remora.Discord.API;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Commands.Contexts;
 using Remora.Results;
+using System.ComponentModel;
+using System.Threading.Tasks;
 using Trixy.Bot.Helpers;
 
 namespace Trixy.Bot.CommandGroups
@@ -33,7 +33,7 @@ namespace Trixy.Bot.CommandGroups
         {
             var userResultAvatarUrl = CDN.GetUserAvatarUrl(target ?? _interactionContext.User);
 
-            var formattedMessage = target is null   
+            var formattedMessage = target is null
                 ? $"{_interactionContext.User.ID.Mention()} | Here's your marvelous avatar...\n{userResultAvatarUrl.Entity?.AbsoluteUri}"
                 : $"{_interactionContext.User.ID.Mention()} | Here's the beautiful avatar of {DiscordFormatter.SurroundWithAsterisks(target.Username)}...\n{userResultAvatarUrl.Entity?.AbsoluteUri}";
 

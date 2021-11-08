@@ -1,3 +1,3 @@
 ﻿using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo(("Trixy.DataAccess.Migrations"))]
+[assembly: InternalsVisibleTo("Trixy.DataAccess.Migrations")]

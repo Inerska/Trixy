@@ -1,10 +1,10 @@
 ﻿#nullable enable
+using Microsoft.EntityFrameworkCore;
+using Remora.Discord.Core;
 using System;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Remora.Discord.Core;
 using Trixy.DataAccess.Models;
 
 namespace Trixy.DataAccess.Users
@@ -31,7 +31,7 @@ namespace Trixy.DataAccess.Users
                 await LevelUpAsync(entityDatabase);
             else
                 entityDatabase.Experience += amount;
-            
+
             await _context.SaveChangesAsync();
         }
 
@@ -39,7 +39,7 @@ namespace Trixy.DataAccess.Users
         {
             var entityDatabase = await GetEntityBySnowflakeAsync(new Snowflake(entity.Snowflake));
             entityDatabase.Experience = 0;
-            entityDatabase.Level ++;
+            entityDatabase.Level++;
 
             await _context.SaveChangesAsync();
         }
@@ -48,8 +48,8 @@ namespace Trixy.DataAccess.Users
         {
             var entityDatabase = await GetEntityBySnowflakeAsync(new Snowflake(entity.Snowflake));
 
-            return (int) Math.Exp(entityDatabase.Level + 3) * 4 + 2;
-        } 
+            return (int)Math.Exp(entityDatabase.Level + 3) * 4 + 2;
+        }
 
         public async void AddEntityAsync(UserEntity entity)
         {

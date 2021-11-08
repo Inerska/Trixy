@@ -1,10 +1,9 @@
-﻿using System;
-using System.Text;
-using System.Threading.Tasks;
-using OneOf;
-using Remora.Discord.API.Abstractions.Objects;
+﻿using OneOf;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Core;
+using System;
+using System.Text;
+using System.Threading.Tasks;
 using Trixy.Common;
 using static Trixy.Bot.Helpers.SocialTheme;
 
@@ -17,7 +16,7 @@ namespace Trixy.Bot.Helpers
             var image = await ExternalFetcher.GetRandomThemeGif(category);
             return new Embed(Description: header,
                 Colour: Colors.Embed.TransparentColor,
-                Image: new EmbedImage(image),
+                Image: new EmbedImage(image!),
                 Footer: new EmbedFooter($"{category.Value} · {DateTime.Now.ToShortTimeString()}"));
         }
 
@@ -38,7 +37,7 @@ namespace Trixy.Bot.Helpers
             return new Embed
             (
                 Description: builder.ToString(),
-                Thumbnail: new EmbedThumbnail(botAvatarUrl),
+                Thumbnail: new EmbedThumbnail(botAvatarUrl!),
                 Colour: Colors.Embed.TransparentColor
             );
         }

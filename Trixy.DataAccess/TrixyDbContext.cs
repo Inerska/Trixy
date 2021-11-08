@@ -1,6 +1,5 @@
-﻿using System;
-using System.IO;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using Trixy.DataAccess.Models;
 
 namespace Trixy.DataAccess
@@ -14,16 +13,12 @@ namespace Trixy.DataAccess
         {
             base.OnConfiguring(optionsBuilder);
 
-            /*var connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING_");
-            if (connectionString is null)
-                throw new ArgumentNullException(nameof(connectionString));*/
-
-            var connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING_") 
+            var connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING_")
                                     ?? throw new ArgumentNullException("DAL connection string cannot be null.");
 
             optionsBuilder
                 .UseSqlite($"Data Source={connectionString};");
-            
+
         }
 
     }
