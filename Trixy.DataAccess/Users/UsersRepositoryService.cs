@@ -28,14 +28,14 @@ namespace Trixy.DataAccess.Users
             var canLevelUp = entityDatabase.Experience + amount >= requiredExperience;
 
             if (canLevelUp)
-                LevelUp(entityDatabase);
+                await LevelUpAsync(entityDatabase);
             else
                 entityDatabase.Experience += amount;
             
             await _context.SaveChangesAsync();
         }
 
-        private async void LevelUp(UserEntity entity)
+        private async Task LevelUpAsync(UserEntity entity)
         {
             var entityDatabase = await GetEntityBySnowflakeAsync(new Snowflake(entity.Snowflake));
             entityDatabase.Experience = 0;

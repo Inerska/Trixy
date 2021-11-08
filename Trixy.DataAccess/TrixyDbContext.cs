@@ -16,10 +16,11 @@ namespace Trixy.DataAccess
 
             /*var connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING_");
             if (connectionString is null)
-                throw new ArgumentNullException(nameof(connectionString));*/ 
+                throw new ArgumentNullException(nameof(connectionString));*/
 
-            var connectionString = 
-                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "trixy.db");
+            var connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING_") 
+                                    ?? throw new ArgumentNullException("DAL connection string cannot be null.");
+
             optionsBuilder
                 .UseSqlite($"Data Source={connectionString};");
             
