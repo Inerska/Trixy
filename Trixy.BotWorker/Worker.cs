@@ -5,6 +5,7 @@ using Remora.Discord.Gateway;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Trixy.DataAccess;
 
 namespace Trixy.BotWorker
 {
