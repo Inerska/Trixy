@@ -1,10 +1,10 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using Remora.Discord.API;
+﻿using Remora.Discord.API;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Gateway.Responders;
 using Remora.Results;
+using System.Threading;
+using System.Threading.Tasks;
 using Trixy.Bot.Helpers;
 
 namespace Trixy.Bot.Responders

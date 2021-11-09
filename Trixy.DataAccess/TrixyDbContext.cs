@@ -18,8 +18,6 @@ namespace Trixy.DataAccess
 
             optionsBuilder
                 .UseSqlite($"Data Source={connectionString};");
-
         }
-
     }
 }

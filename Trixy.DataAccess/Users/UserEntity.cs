@@ -13,7 +13,6 @@ namespace Trixy.DataAccess.Models
         public UserEntity(ulong snowflake)
             => Snowflake = snowflake;
 
-
         public int Id { get; set; }
         public ulong Snowflake { get; set; }
         public int Experience { get; set; }
@@ -21,7 +20,6 @@ namespace Trixy.DataAccess.Models
         public List<GuildEntity> Guilds { get; set; }
     }
 }
-
 
 namespace System.Runtime.CompilerServices
 {

@@ -1,6 +1,4 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Gateway.Commands;
@@ -10,6 +8,8 @@ using Remora.Discord.Gateway;
 using Remora.Discord.Gateway.Responders;
 using Remora.Discord.Gateway.Services;
 using Remora.Results;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Trixy.Bot.Responders
 {

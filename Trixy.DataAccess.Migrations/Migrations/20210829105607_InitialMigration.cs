@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace Trixy.DataAccess.Migrations
+﻿namespace Trixy.DataAccess.Migrations
 {
     public partial class InitialMigration : Migration
     {

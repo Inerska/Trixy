@@ -1,5 +1,5 @@
-using System.ComponentModel;
 using OneOf;
+using System.ComponentModel;
 
 namespace Trixy.Bot.Helpers
 {

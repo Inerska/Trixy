@@ -1,15 +1,15 @@
-﻿using System.ComponentModel;
-using System.Threading.Tasks;
-using OneOf;
+﻿using OneOf;
 using Remora.Commands.Attributes;
 using Remora.Commands.Groups;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Commands.Contexts;
 using Remora.Results;
+using System.ComponentModel;
+using System.Threading.Tasks;
 using Trixy.Bot.Helpers;
-using static Trixy.Bot.Helpers.SocialTheme;
 using static Trixy.Bot.Helpers.DiscordFormatter;
+using static Trixy.Bot.Helpers.SocialTheme;
 
 namespace Trixy.Bot.CommandGroups
 {
@@ -178,6 +178,6 @@ namespace Trixy.Bot.CommandGroups
             return await SendSocialEmbedAsync(SafeForWork.SLAP, target);
         }
 
-        #endregion
+        #endregion CommandsGroups
     }
 }

@@ -1,10 +1,10 @@
+using Newtonsoft.Json;
+using OneOf;
 using System;
 using System.ComponentModel;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using OneOf;
 using static Trixy.Bot.Helpers.SocialTheme;
 
 namespace Trixy.Bot.Helpers
@@ -12,7 +12,7 @@ namespace Trixy.Bot.Helpers
     internal static class ExternalFetcher
     {
         public static async Task<string?> GetRandomThemeGif(
-                OneOf<SafeForWork, 
+                OneOf<SafeForWork,
                 NotSafeForWork> category)
         {
             var baseUrl = category.IsT0

@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using Remora.Discord.API.Abstractions.Rest;
+﻿using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Contexts;
 using Remora.Results;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Trixy.Bot.Helpers
 {
@@ -27,6 +26,7 @@ namespace Trixy.Bot.Helpers
                 ? Result.FromSuccess()
                 : Result.FromError(result.Error);
         }
+
         internal static async Task<IResult> CreateFollowupMessageHelperAsync(
             IDiscordRestInteractionAPI discordRestInteractionApi,
             InteractionContext interactionContext,

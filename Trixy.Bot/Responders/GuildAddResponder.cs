@@ -1,8 +1,8 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using Remora.Discord.API.Abstractions.Gateway.Events;
+﻿using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.Gateway.Responders;
 using Remora.Results;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Trixy.Bot.Responders
 {

@@ -1,16 +1,19 @@
 <Project Sdk="Microsoft.NET.Sdk.Worker">
 
-    <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
-        <UserSecretsId>dotnet-Trixy.BotWorker-5852CA1B-34D1-4939-9FB1-5CA442759436</UserSecretsId>
-    </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net5.0</TargetFramework>
+		<UserSecretsId>dotnet-Trixy.BotWorker-5852CA1B-34D1-4939-9FB1-5CA442759436</UserSecretsId>
+	</PropertyGroup>
 
-    <ItemGroup>
-        <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
-        <PackageReference Include="Remora.Discord" Version="3.0.56" />
-    </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.9" />
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
+		<PackageReference Include="Remora.Discord" Version="3.0.56" />
+	</ItemGroup>
 
-    <ItemGroup>
-        <ProjectReference Include="..\Trixy.Bot\Trixy.Bot.csproj" />
-    </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Trixy.Abstractions\Trixy.Abstractions.csproj" />
+		<ProjectReference Include="..\Trixy.Bot\Trixy.Bot.csproj" />
+		<ProjectReference Include="..\Trixy.DataAccess\Trixy.DataAccess.csproj" />
+	</ItemGroup>
 </Project>

@@ -1,25 +1,28 @@
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Remora.Discord.Commands.Services;
 using Remora.Discord.Gateway;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Trixy.BotWorker
 {
     public sealed class Worker
         : BackgroundService
     {
+        private readonly TrixyDbContext _trixyDbContext;
         private readonly DiscordGatewayClient _discordGatewayClient;
         private readonly ILogger<Worker> _logger;
         private readonly SlashService _slashService;
 
         public Worker(
+            TrixyDbContext trixyDbContext,
             ILogger<Worker> logger,
             DiscordGatewayClient discordGatewayClient,
             SlashService slashService)
         {
+            _trixyDbContext = trixyDbContext;
             _logger = logger;
             _discordGatewayClient = discordGatewayClient;
             _slashService = slashService;

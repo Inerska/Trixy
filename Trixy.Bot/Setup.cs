@@ -1,7 +1,7 @@
-﻿using System;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Gateway.Extensions;
+using System;
 using Trixy.Bot.CommandGroups;
 using Trixy.Bot.Responders;
 

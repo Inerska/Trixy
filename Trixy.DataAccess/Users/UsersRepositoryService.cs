@@ -1,4 +1,5 @@
 ﻿#nullable enable
+
 using Microsoft.EntityFrameworkCore;
 using Remora.Discord.Core;
 using System;
@@ -48,7 +49,7 @@ namespace Trixy.DataAccess.Users
         {
             var entityDatabase = await GetEntityBySnowflakeAsync(new Snowflake(entity.Snowflake));
 
-            return (int)Math.Exp(entityDatabase.Level + 3) * 4 + 2;
+            return ((int)Math.Exp(entityDatabase.Level + 3) * 4) + 2;
         }
 
         public async void AddEntityAsync(UserEntity entity)

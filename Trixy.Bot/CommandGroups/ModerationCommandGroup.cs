@@ -1,18 +1,15 @@
-﻿using System;
-using System.ComponentModel;
-using System.Text;
-using System.Threading.Tasks;
-using Remora.Commands.Attributes;
+﻿using Remora.Commands.Attributes;
 using Remora.Commands.Groups;
-using Remora.Discord.API;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Conditions;
 using Remora.Discord.Commands.Contexts;
 using Remora.Results;
+using System.ComponentModel;
+using System.Text;
+using System.Threading.Tasks;
 using Trixy.Bot.Helpers;
-
 using static Trixy.Bot.Helpers.DiscordFormatter;
 
 namespace Trixy.Bot.CommandGroups
@@ -30,8 +27,8 @@ namespace Trixy.Bot.CommandGroups
         public ModerationCommandGroup(
             InteractionContext interactionContext,
             IDiscordRestInteractionAPI discordRestInteractionApi,
-            IDiscordRestGuildAPI discordRestGuildApi, 
-            IDiscordRestUserAPI discordRestUserApi, 
+            IDiscordRestGuildAPI discordRestGuildApi,
+            IDiscordRestUserAPI discordRestUserApi,
             IDiscordRestChannelAPI discordRestChannelApi)
         {
             _interactionContext = interactionContext;
@@ -121,7 +118,7 @@ namespace Trixy.Bot.CommandGroups
 
             var guild = _discordRestGuildApi.GetGuildAsync(_interactionContext.GuildID.Value);
             var guildName = guild.Result.Entity?.Name;
-            
+
             var notificationMessageBuilder = new StringBuilder();
             notificationMessageBuilder
                 .AppendLine($"You've been kicked / banned from {SurroundWithAsterisks(guildName)} !")
@@ -129,11 +126,11 @@ namespace Trixy.Bot.CommandGroups
                 .AppendLine("───\n")
                 .AppendLine("Use this time to repent yourself and comeback again if you can, otherwise, farewells.")
                 .AppendLine("— Trixy.");
-            
+
             var result = await _discordRestChannelApi.CreateMessageAsync
                 (
                     privateUserChannel.Entity!.ID,
-                    embeds: new []{ 
+                    embeds: new[]{
                         embed with
                     {
                         Description = notificationMessageBuilder.ToString()

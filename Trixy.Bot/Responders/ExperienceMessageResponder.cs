@@ -1,10 +1,9 @@
-﻿using System;
-using System.Security.Cryptography.X509Certificates;
-using System.Threading;
-using System.Threading.Tasks;
-using Remora.Discord.API.Abstractions.Gateway.Events;
+﻿using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.Gateway.Responders;
 using Remora.Results;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Trixy.DataAccess;
 using Trixy.DataAccess.Users;
 
@@ -21,10 +20,10 @@ namespace Trixy.Bot.Responders
 
             var canEarnExperiences = new Random().Next(0, 3) == 2;
             var experienceAmount = new Random().Next(8, 16);
-            
+
             if (canEarnExperiences)
                 service.EarnExperience(userDatabase, experienceAmount);
-            
+
             return await Task.FromResult(Result.FromSuccess());
         }
     }
