@@ -1,6 +1,6 @@
-﻿using Remora.Discord.Core;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
+using Remora.Discord.Core;
 using Trixy.DataAccess.Guilds;
 
 namespace Trixy.DataAccess.Models
@@ -8,10 +8,14 @@ namespace Trixy.DataAccess.Models
     public sealed class UserEntity
     {
         public UserEntity(Snowflake snowflake)
-            => Snowflake = snowflake.Value;
+        {
+            Snowflake = snowflake.Value;
+        }
 
         public UserEntity(ulong snowflake)
-            => Snowflake = snowflake;
+        {
+            Snowflake = snowflake;
+        }
 
         public int Id { get; set; }
         public ulong Snowflake { get; set; }

@@ -1,14 +1,13 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace Trixy.Abstractions.Extensions
+namespace Trixy.Abstractions.Extensions;
+
+public static class Setup
 {
-    public static class Setup
+    public static IServiceCollection AddTrixyOptions(this IServiceCollection services)
     {
-        public static IServiceCollection AddTrixyOptions(this IServiceCollection services)
-        {
-            return services
-                    .AddTextChannelsOption()
-                ;
-        }
+        return services
+                .AddTextChannelsOption()
+            ;
     }
 }

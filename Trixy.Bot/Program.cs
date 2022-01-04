@@ -1,9 +1,8 @@
-﻿namespace Trixy.Bot
+﻿namespace Trixy.Bot;
+
+internal static class Program
 {
-    internal static class Program
+    private static void Main()
     {
-        private static void Main()
-        {
-        }
     }
 }

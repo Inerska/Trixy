@@ -1,23 +1,22 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
 using Trixy.DataAccess.Models;
 
-namespace Trixy.DataAccess
+namespace Trixy.DataAccess;
+
+public class TrixyDbContext
+    : DbContext
 {
-    public class TrixyDbContext
-        : DbContext
+    public DbSet<UserEntity> Users { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        public DbSet<UserEntity> Users { get; set; }
+        base.OnConfiguring(optionsBuilder);
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            base.OnConfiguring(optionsBuilder);
+        var connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING_")
+                               ?? throw new ArgumentNullException("DAL connection string cannot be null.");
 
-            var connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING_")
-                                    ?? throw new ArgumentNullException("DAL connection string cannot be null.");
-
-            optionsBuilder
-                .UseSqlite($"Data Source={connectionString};");
-        }
+        optionsBuilder
+            .UseSqlite($"Data Source={connectionString};");
     }
 }

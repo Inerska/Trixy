@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Options;
+﻿using System;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
 using Remora.Commands.Attributes;
 using Remora.Commands.Groups;
 using Remora.Discord.API.Abstractions.Objects;
@@ -6,34 +8,31 @@ using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Commands.Conditions;
 using Remora.Discord.Commands.Contexts;
 using Remora.Results;
-using System;
-using System.Threading.Tasks;
-using Trixy.Abstractions;
+using Trixy.Abstractions.Configuration;
 
-namespace Trixy.Bot.CommandGroups
+namespace Trixy.Bot.CommandGroups;
+
+internal class TicketCommandGroup
+    : CommandGroup
 {
-    internal class TicketCommandGroup
-        : CommandGroup
+    private readonly IDiscordRestWebhookAPI _discordRestWebhookApi;
+    private readonly InteractionContext _interactionContext;
+    private readonly IOptions<DiscordTextChannelsOptions> _options;
+
+    public TicketCommandGroup(
+        IDiscordRestWebhookAPI discordRestWebhookApi,
+        InteractionContext interactionContext,
+        IOptions<DiscordTextChannelsOptions> options)
     {
-        private readonly IDiscordRestWebhookAPI _discordRestWebhookApi;
-        private readonly InteractionContext _interactionContext;
-        private readonly IOptions<DiscordTextChannelsOptions> _options;
+        _discordRestWebhookApi = discordRestWebhookApi;
+        _interactionContext = interactionContext;
+        _options = options;
+    }
 
-        public TicketCommandGroup(
-            IDiscordRestWebhookAPI discordRestWebhookApi,
-            InteractionContext interactionContext,
-            IOptions<DiscordTextChannelsOptions> options)
-        {
-            _discordRestWebhookApi = discordRestWebhookApi;
-            _interactionContext = interactionContext;
-            _options = options;
-        }
-
-        [Command("create-ticket")]
-        [RequireDiscordPermission(DiscordPermission.ManageChannels)]
-        public async Task<IResult> CreateTicketCommandAsync()
-        {
-            throw new NotImplementedException();
-        }
+    [Command("create-ticket")]
+    [RequireDiscordPermission(DiscordPermission.ManageChannels)]
+    public async Task<IResult> CreateTicketCommandAsync()
+    {
+        throw new NotImplementedException();
     }
 }

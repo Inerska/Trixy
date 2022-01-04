@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Gateway.Commands;
@@ -8,49 +10,46 @@ using Remora.Discord.Gateway;
 using Remora.Discord.Gateway.Responders;
 using Remora.Discord.Gateway.Services;
 using Remora.Results;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace Trixy.Bot.Responders
+namespace Trixy.Bot.Responders;
+
+internal class ReadyResponder
+    : IResponder<IReady>, IResponder<IGuildCreate>
 {
-    internal class ReadyResponder
-        : IResponder<IReady>, IResponder<IGuildCreate>
+    private readonly DiscordGatewayClient _gatewayClient;
+    private readonly ILogger<ResponderService> _logger;
+    private readonly SlashService _slashService;
+
+    public ReadyResponder(
+        DiscordGatewayClient gatewayClient,
+        ILogger<ResponderService> logger,
+        SlashService slashService)
     {
-        private readonly DiscordGatewayClient _gatewayClient;
-        private readonly ILogger<ResponderService> _logger;
-        private readonly SlashService _slashService;
+        _gatewayClient = gatewayClient;
+        _logger = logger;
+        _slashService = slashService;
+    }
 
-        public ReadyResponder(
-            DiscordGatewayClient gatewayClient,
-            ILogger<ResponderService> logger,
-            SlashService slashService)
+    public async Task<Result> RespondAsync(IGuildCreate gatewayEvent, CancellationToken ct = default)
+    {
+        _logger.LogInformation("Setting up slash-commands");
+
+        var result = await _slashService.UpdateSlashCommandsAsync(gatewayEvent.ID, ct);
+        return result.IsSuccess
+            ? Result.FromSuccess()
+            : Result.FromError(result.Error);
+    }
+
+    public Task<Result> RespondAsync(IReady gatewayEvent, CancellationToken ct = default)
+    {
+        var presenceCommand = new UpdatePresence(ClientStatus.Online, false, null, new IActivity[]
         {
-            _gatewayClient = gatewayClient;
-            _logger = logger;
-            _slashService = slashService;
-        }
+            new Activity("the twinkle twinkle little star", ActivityType.Watching)
+        });
 
-        public async Task<Result> RespondAsync(IGuildCreate gatewayEvent, CancellationToken ct = default)
-        {
-            _logger.LogInformation("Setting up slash-commands");
+        _gatewayClient.SubmitCommandAsync(presenceCommand);
+        _logger.LogInformation("Operational !");
 
-            var result = await _slashService.UpdateSlashCommandsAsync(gatewayEvent.ID, ct);
-            return result.IsSuccess
-                ? Result.FromSuccess()
-                : Result.FromError(result.Error);
-        }
-
-        public Task<Result> RespondAsync(IReady gatewayEvent, CancellationToken ct = default)
-        {
-            var presenceCommand = new UpdatePresence(ClientStatus.Online, false, null, new IActivity[]
-            {
-                new Activity("the twinkle twinkle little star", ActivityType.Watching)
-            });
-
-            _gatewayClient.SubmitCommandAsync(presenceCommand);
-            _logger.LogInformation("Operational !");
-
-            return Task.FromResult(Result.FromSuccess());
-        }
+        return Task.FromResult(Result.FromSuccess());
     }
 }

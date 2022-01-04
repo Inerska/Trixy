@@ -1,4 +1,7 @@
-﻿using Remora.Commands.Attributes;
+﻿using System.ComponentModel;
+using System.Text;
+using System.Threading.Tasks;
+using Remora.Commands.Attributes;
 using Remora.Commands.Groups;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
@@ -6,139 +9,141 @@ using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Conditions;
 using Remora.Discord.Commands.Contexts;
 using Remora.Results;
-using System.ComponentModel;
-using System.Text;
-using System.Threading.Tasks;
 using Trixy.Bot.Helpers;
 using static Trixy.Bot.Helpers.DiscordFormatter;
 
-namespace Trixy.Bot.CommandGroups
+namespace Trixy.Bot.CommandGroups;
+
+//TODO: Logging every moderation commands invoke.
+internal class ModerationCommandGroup
+    : CommandGroup
 {
-    //TODO: Logging every moderation commands invoke.
-    internal class ModerationCommandGroup
-        : CommandGroup
+    private readonly IDiscordRestChannelAPI _discordRestChannelApi;
+    private readonly IDiscordRestGuildAPI _discordRestGuildApi;
+    private readonly IDiscordRestInteractionAPI _discordRestInteractionApi;
+    private readonly IDiscordRestUserAPI _discordRestUserApi;
+    private readonly InteractionContext _interactionContext;
+
+    public ModerationCommandGroup(
+        InteractionContext interactionContext,
+        IDiscordRestInteractionAPI discordRestInteractionApi,
+        IDiscordRestGuildAPI discordRestGuildApi,
+        IDiscordRestUserAPI discordRestUserApi,
+        IDiscordRestChannelAPI discordRestChannelApi)
     {
-        private readonly IDiscordRestInteractionAPI _discordRestInteractionApi;
-        private readonly InteractionContext _interactionContext;
-        private readonly IDiscordRestGuildAPI _discordRestGuildApi;
-        private readonly IDiscordRestUserAPI _discordRestUserApi;
-        private readonly IDiscordRestChannelAPI _discordRestChannelApi;
+        _interactionContext = interactionContext;
+        _discordRestInteractionApi = discordRestInteractionApi;
+        _discordRestGuildApi = discordRestGuildApi;
+        _discordRestUserApi = discordRestUserApi;
+        _discordRestChannelApi = discordRestChannelApi;
+    }
 
-        public ModerationCommandGroup(
-            InteractionContext interactionContext,
-            IDiscordRestInteractionAPI discordRestInteractionApi,
-            IDiscordRestGuildAPI discordRestGuildApi,
-            IDiscordRestUserAPI discordRestUserApi,
-            IDiscordRestChannelAPI discordRestChannelApi)
-        {
-            _interactionContext = interactionContext;
-            _discordRestInteractionApi = discordRestInteractionApi;
-            _discordRestGuildApi = discordRestGuildApi;
-            _discordRestUserApi = discordRestUserApi;
-            _discordRestChannelApi = discordRestChannelApi;
-        }
+    [Command("ban")]
+    [RequireDiscordPermission(DiscordPermission.BanMembers)]
+    [Description("Ban the target from your discord server.")]
+    public async Task<IResult> ModerationBanCommandAsync(
+        [Description("The user to ban.")] IUser target,
+        [Description("(Mandatory) The reason.")]
+        string? reason = null)
+    {
+        var message =
+            $"I have banned {SurroundWithAsterisks(target.Username)}, he/she/they won't bother us anymore for a looong time...";
 
-        [Command("ban")]
-        [RequireDiscordPermission(DiscordPermission.BanMembers)]
-        [Description("Ban the target from your discord server.")]
-        public async Task<IResult> ModerationBanCommandAsync(
-            [Description("The user to ban.")] IUser target,
-            [Description("(Mandatory) The reason.")] string? reason = null)
-        {
-            var message =
-                $"I have banned {SurroundWithAsterisks(target.Username)}, he/she/they won't bother us anymore for a looong time...";
+        await SendSingleMessageModerationEmbedAsync(message, reason, true, target);
 
-            await SendSingleMessageModerationEmbedAsync(message, reason, true, target);
+        var result = await _discordRestGuildApi.CreateGuildBanAsync(_interactionContext.GuildID.Value, target.ID,
+            reason: reason ?? string.Empty);
 
-            var result = await _discordRestGuildApi.CreateGuildBanAsync(_interactionContext.GuildID.Value, target.ID,
-                reason: reason ?? string.Empty);
+        return result.IsSuccess
+            ? Result.FromSuccess()
+            : Result.FromError(result.Error);
+    }
 
-            return result.IsSuccess
-                ? Result.FromSuccess()
-                : Result.FromError(result.Error);
-        }
+    [Command("kick")]
+    [RequireDiscordPermission(DiscordPermission.KickMembers)]
+    [Description("Kick the target out of your discord server.")]
+    public async Task<IResult> ModerationKickCommandAsync(
+        [Description("The user to kick.")] IUser target,
+        [Description("(Mandatory) The reason.")]
+        string? reason = null)
+    {
+        var message =
+            $"I have kicked {SurroundWithAsterisks(target.Username)} out, hope to not seeing him/her/them for a long time...";
 
-        [Command("kick")]
-        [RequireDiscordPermission(DiscordPermission.KickMembers)]
-        [Description("Kick the target out of your discord server.")]
-        public async Task<IResult> ModerationKickCommandAsync(
-            [Description("The user to kick.")] IUser target,
-            [Description("(Mandatory) The reason.")] string? reason = null)
-        {
-            var message =
-                $"I have kicked {SurroundWithAsterisks(target.Username)} out, hope to not seeing him/her/them for a long time...";
+        await SendSingleMessageModerationEmbedAsync(message, reason, true, target);
 
-            await SendSingleMessageModerationEmbedAsync(message, reason, true, target);
+        var result = await _discordRestGuildApi.RemoveGuildMemberAsync(_interactionContext.GuildID.Value, target.ID,
+            reason ?? string.Empty);
+        return result.IsSuccess
+            ? Result.FromSuccess()
+            : Result.FromError(result.Error);
+    }
 
-            var result = await _discordRestGuildApi.RemoveGuildMemberAsync(_interactionContext.GuildID.Value, target.ID,
-                reason ?? string.Empty);
-            return result.IsSuccess
-                ? Result.FromSuccess()
-                : Result.FromError(result.Error);
-        }
+    [Command("say")]
+    [RequireDiscordPermission(DiscordPermission.PrioritySpeaker)]
+    [Description("Make the bot speaks whatever you want.")]
+    public async Task<IResult> ModerationSayCommandAsync(
+        [Description("The message that the bot will say.")]
+        string message)
+    {
+        await SendSingleMessageModerationEmbedAsync(message);
 
-        [Command("say")]
-        [RequireDiscordPermission(DiscordPermission.PrioritySpeaker)]
-        [Description("Make the bot speaks whatever you want.")]
-        public async Task<IResult> ModerationSayCommandAsync([Description("The message that the bot will say.")] string message)
-        {
-            await SendSingleMessageModerationEmbedAsync(message);
+        return Result.FromSuccess();
+    }
 
-            return Result.FromSuccess();
-        }
+    private async Task SendSingleMessageModerationEmbedAsync(
+        string message,
+        string? reason = null,
+        bool hasPrivateNotification = false,
+        IUser? target = null)
+    {
+        var embed = TemplateEmbed.GetSingleMessageEmbed(message);
 
-        private async Task SendSingleMessageModerationEmbedAsync(
-            string message,
-            string? reason = null,
-            bool hasPrivateNotification = false,
-            IUser? target = null)
-        {
-            var embed = TemplateEmbed.GetSingleMessageEmbed(message);
+        if (hasPrivateNotification) await SendPrivateUserNotificationAsync(target!, embed, reason);
+        await MessageHelper.CreateFollowupEmbedMessageHelperAsync
+        (
+            _discordRestInteractionApi,
+            _interactionContext,
+            embed,
+            CancellationToken
+        );
+    }
 
-            if (hasPrivateNotification) await SendPrivateUserNotificationAsync(target!, embed, reason);
-            await MessageHelper.CreateFollowupEmbedMessageHelperAsync
-            (
-                _discordRestInteractionApi,
-                _interactionContext,
-                embed,
-                CancellationToken
-            );
-        }
+    private async Task<IResult> SendPrivateUserNotificationAsync(
+        IUser target,
+        Embed embed,
+        string? reason = null)
+    {
+        var privateUserChannel = await _discordRestUserApi.CreateDMAsync
+        (
+            target.ID,
+            CancellationToken
+        );
 
-        private async Task<IResult> SendPrivateUserNotificationAsync(
-            IUser target,
-            Embed embed,
-            string? reason = null)
-        {
-            var privateUserChannel = await _discordRestUserApi.CreateDMAsync
-                (
-                    target.ID,
-                    CancellationToken
-                );
+        var guild = _discordRestGuildApi.GetGuildAsync(_interactionContext.GuildID.Value);
+        var guildName = guild.Result.Entity.Name!;
 
-            var guild = _discordRestGuildApi.GetGuildAsync(_interactionContext.GuildID.Value);
-            var guildName = guild.Result.Entity?.Name;
+        var notificationMessageBuilder = new StringBuilder();
+        notificationMessageBuilder
+            .AppendLine($"You've been kicked / banned from {SurroundWithAsterisks(guildName)} !")
+            .AppendLine($"{SurroundWithAsterisks("Reason :")} {reason ?? "no reason"}")
+            .AppendLine("───\n")
+            .AppendLine("Use this time to repent yourself and comeback again if you can, otherwise, farewells.")
+            .AppendLine("— Trixy.");
 
-            var notificationMessageBuilder = new StringBuilder();
-            notificationMessageBuilder
-                .AppendLine($"You've been kicked / banned from {SurroundWithAsterisks(guildName)} !")
-                .AppendLine($"{SurroundWithAsterisks("Reason :")} {reason ?? "no reason"}")
-                .AppendLine("───\n")
-                .AppendLine("Use this time to repent yourself and comeback again if you can, otherwise, farewells.")
-                .AppendLine("— Trixy.");
-
-            var result = await _discordRestChannelApi.CreateMessageAsync
-                (
-                    privateUserChannel.Entity!.ID,
-                    embeds: new[]{
-                        embed with
-                    {
-                        Description = notificationMessageBuilder.ToString()
-                    }}
-                );
-            return result.IsSuccess
-                ? Result.FromSuccess()
-                : Result.FromError(result.Error);
-        }
+        var result = await _discordRestChannelApi.CreateMessageAsync
+        (
+            privateUserChannel.Entity!.ID,
+            embeds: new[]
+            {
+                embed with
+                {
+                    Description = notificationMessageBuilder.ToString()
+                }
+            }
+        );
+        return result.IsSuccess
+            ? Result.FromSuccess()
+            : Result.FromError(result.Error);
     }
 }

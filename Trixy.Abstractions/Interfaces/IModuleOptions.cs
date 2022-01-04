@@ -1,7 +1,6 @@
-﻿namespace Trixy.Abstractions.Interfaces
+﻿namespace Trixy.Abstractions.Interfaces;
+
+internal interface IModuleOptions
 {
-    internal interface IModuleOptions
-    {
-        public string ConfigurationModuleName { get; set; }
-    }
+    public string ConfigurationModuleName { get; set; }
 }

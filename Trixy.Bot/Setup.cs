@@ -1,31 +1,30 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System;
+using Microsoft.Extensions.DependencyInjection;
 using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Gateway.Extensions;
-using System;
 using Trixy.Bot.CommandGroups;
 using Trixy.Bot.Responders;
 
-namespace Trixy.Bot
+namespace Trixy.Bot;
+
+public static class Setup
 {
-    public static class Setup
+    public static IServiceCollection AddTrixyBot(
+        this IServiceCollection services)
     {
-        public static IServiceCollection AddTrixyBot(
-            this IServiceCollection services)
-        {
-            return services
-                .AddDiscordGateway(_ => GetSecretToken())
-                .AddDiscordCommands(true)
-                .AddTrixyCommands()
-                .AddTrixyResponders();
-        }
+        return services
+            .AddDiscordGateway(_ => GetSecretToken())
+            .AddDiscordCommands(true)
+            .AddTrixyCommands()
+            .AddTrixyResponders();
+    }
 
-        private static string GetSecretToken()
-        {
-            var secretToken = Environment.GetEnvironmentVariable("TRIXY_");
-            if (secretToken is null)
-                throw new ArgumentNullException(nameof(secretToken));
+    private static string GetSecretToken()
+    {
+        var secretToken = Environment.GetEnvironmentVariable("TRIXY_");
+        if (secretToken is null)
+            throw new ArgumentNullException(nameof(secretToken));
 
-            return secretToken;
-        }
+        return secretToken;
     }
 }
